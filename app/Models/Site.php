@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Site extends Model {
+	// protected $table = 'sites';
+	// use HasFactory();
+	
+	protected $fillable = ['site_name', 'near', 'site_description', 'site_access', 'site_wind_directions', 'lat', 'lng', 'created_by',
+		'updated_by', 'published', 'updated_at' ];
+
+	static function getSiteList() {
+		$sites = Site::where('published', 1)
+		->orderBy('site_name')
+		->get();
+ 
+		return $sites;
+	}
+}
+
