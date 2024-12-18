@@ -10,4 +10,7 @@
 			</li>
 		@endforeach
 		</ul>
+		<div> 
+			{{ $sites->links() }}
+</div>
 </x-layout>

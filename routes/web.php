@@ -8,8 +8,9 @@ Route::get('/', function () {
 }
 );
 Route::get('/sitelist', function () {
-    return view('sitelist', [
-    'sites' => Site::getSiteList()]);
+
+    $sites = Site::simplePaginate(25);
+    return view('sitelist', ['sites' => $sites]);
 });
 
 Route::get('/login', function () {
