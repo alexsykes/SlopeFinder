@@ -21,7 +21,8 @@ echo env('APP_NAME');
 				<div class="ml-10 flex items-baseline space-x-4">
 					<x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
 					<x-nav-link href="/sitelist" :active="request()->is('sitelist')">Site list</x-nav-link>
-					<x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
+                    <x-nav-link href="/sites/create" :active="request()->is('sites/create')">Add a Site</x-nav-link>
+                    <x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
 				</div>
           </div>
         </div>

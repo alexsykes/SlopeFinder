@@ -17,8 +17,9 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/addsite', function () {
-    return view('addsite');
+
+Route::get('sites/create', function () {
+    return view('sites.create');
 });
 
 Route::get('/sitedetail/{id}', function($id) {
