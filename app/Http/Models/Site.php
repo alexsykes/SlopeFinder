@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Models;
 
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Site extends Model {
 	// protected $table = 'sites';

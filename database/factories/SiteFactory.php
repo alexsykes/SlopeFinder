@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Site;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Site>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Http\Models\Site>
  */
 class SiteFactory extends Factory
 {
