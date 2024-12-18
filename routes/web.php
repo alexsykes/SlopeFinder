@@ -9,12 +9,28 @@ Route::get('/', function () {
 );
 Route::get('/sitelist', function () {
 
-    $sites = Site::simplePaginate(25);
+    $sites = Site::latest()->simplePaginate(25);
     return view('sitelist', ['sites' => $sites]);
 });
 
 Route::get('/login', function () {
     return view('login');
+});
+
+Route::post('/sites', function() {
+//    validate
+
+    Site::create([
+        'site_name' => request('site_name'),
+        'near' => request('near'),
+        'site_description' => request('site_description'),
+        'site_access' => request('site_access'),
+        'site_wind_directions' => request('site_wind_directions'),
+        'lat'   => request('lat'),
+        'lng'   => request('lng')
+    ]);
+
+    return redirect('/sitelist');
 });
 
 
