@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 // Display home page
 Route::get('/', function () {
-	return view('home');
+    $sites = Site::orderBy('site_name')->simplePaginate(30);
+    return view('sitelist', ['sites' => $sites]);
 }
 );
 
