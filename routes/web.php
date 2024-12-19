@@ -13,8 +13,8 @@ Route::get('/', function () {
 // Display all sites with pagination
 Route::get('/sitelist', function () {
 
-    $sites = Site::latest()->simplePaginate(25);
-    $sites = Site::orderBy('site_name')->simplePaginate(25);
+//    $sites = Site::latest()->simplePaginate(25);
+    $sites = Site::orderBy('site_name')->simplePaginate(30);
     return view('sitelist', ['sites' => $sites]);
 });
 
