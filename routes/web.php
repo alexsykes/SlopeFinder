@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $sites = Site::all();
     return view('home', ['sites' => $sites]);
-
-//    return view('home');
 }
 );
 
@@ -45,10 +43,11 @@ Route::post('/sites', function() {
         'site_access' => request('site_access'),
         'site_wind_directions' => request('site_wind_directions'),
         'lat'   => request('lat'),
-        'lng'   => request('lng')
+        'lng'   => request('lng'),
+        'w3w'   => request('w3w')
     ]);
 
-    return redirect('/sitelist');
+    return redirect('/');
 });
 
 //  Form for site editing
@@ -92,7 +91,8 @@ Route::patch('/sitedetail/{id}', function($id) {
         'site_access' => request('site_access'),
         'site_wind_directions' => request('site_wind_directions'),
         'lat'   => request('lat'),
-        'lng'   => request('lng')
+        'lng'   => request('lng'),
+        'w3w'   => request('w3w')
     ]);
     return redirect('/sitedetail/' . $site->id);
 });

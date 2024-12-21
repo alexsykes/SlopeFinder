@@ -17,10 +17,10 @@
 		}
 
 	</style>
-<x-slot:heading>SlopeFinder</x-slot:heading>
+<x-slot:heading>SlopFinder Demo</x-slot:heading>
 	<script>
 		(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-			key: "{{env('GMAP_API')}}",
+			key: "{{env('GMAP_LOCAL')}}",
 			v: "weekly",
 			// Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
 			// Add other bootstrap parameters as needed, using camel case.
@@ -44,7 +44,7 @@
 			const { Map } = await google.maps.importLibrary("maps");
 			const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
 
-			const position = { lat: 54, lng: -2 };
+			const position = { lat: 54.543, lng: -2.7764678 };
 			map = new Map(document.getElementById("map"), {
 				zoom: 10,
 				center: position,
@@ -100,16 +100,18 @@
 
 									});
 								}
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function (position) {
-					initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					map.setCenter(initialLocation);
+			// if (navigator.geolocation) {
+			// 	navigator.geolocation.getCurrentPosition(function (position) {
+			// 		initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			// 		map.setCenter(initialLocation);
+			// 			});
+			// 	httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=metric&exclude=minutely&appid=",myCallback)
+			// }
+			// else {
 
-						});
-			}
-			else {
-				httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=53.8&lon=-2&units=metric&exclude=minutely&appid=",myCallback)
-			}
+
+				httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);
+			// }
 		}
 		function httpGetAsync(theUrl, callback)
 		{
@@ -123,8 +125,20 @@
 		}
 
 		function myCallback(responseText) {
-			console.log(responseText);
+			let forecast = document.getElementById("forecast");
+			let weatherData =  JSON.parse(responseText);
+			// let stringy = JSON.stringify(weatherData['current']['weather'][0]['description'], null, 5);
+			// console.log("responseText: " + responseText);
+			let lat = weatherData['lat'];
+			let sunrise = weatherData['daily'][0]['summary'];
+
+			let hourlyData = weatherData['hourly'];
+			for ( let i in hourlyData) {
+				console.log( i + ":: Wind: " + hourlyData[i]['wind_speed'] + " at " + hourlyData[i]['wind_deg'] + "°")
+				}
+			forecast.innerHTML = "Current Wind:";
 		}
 		initMap();
 	</script><div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
+	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>
 </x-layout>
