@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Models\Site;
+use App\Http\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,6 +17,27 @@ Route::get('/register', function () {
 }
 );
 
+//  Process new site data
+Route::post('/register', function() {
+//    dd(request());
+//    validate
+    request()->validate([
+        'name' => ['required', 'min:3'],
+        'username' => ['required', 'min:3', 'unique:users'],
+        'email' => ['required', 'email', 'unique:users'],
+        'password' => ['required'],
+        'accept_terms' => ['required']
+    ]);
+//
+    User::create([
+        'name' => request('name'),
+        'email' => request('email'),
+        'password' => request('password')
+    ]);
+
+    return redirect('/register');
+});
+
 // Display all sites with pagination
 Route::get('/sitelist', function () {
 
@@ -28,6 +50,8 @@ Route::get('/sitelist', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+
 
 //  Process new site data
 Route::post('/sites', function() {
