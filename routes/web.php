@@ -10,6 +10,11 @@ Route::get('/', function () {
     return view('home', ['sites' => $sites]);
 }
 );
+// Display home page
+Route::get('/register', function () {
+    return view('auth/register');
+}
+);
 
 // Display all sites with pagination
 Route::get('/sitelist', function () {
