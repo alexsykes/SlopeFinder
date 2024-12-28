@@ -102,6 +102,7 @@
               <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
               @enderror
           </div>
+
           <div class="sm:col-span-full">
               <label for="w3w" class="block text-sm/6 font-medium text-gray-900">What3Words</label>
               <div class="mt-2">
@@ -110,12 +111,13 @@
                       <input type="text" name="w3w" id="w3w" class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="What 3 Words reference eg. delivering.multiplied.racers">
                   </div>
               </div>
+              @error('w3w')
+              <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+              @enderror
           </div>
       </div>
 
-        @error('w3w')
-        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-        @enderror
+
     </div>
   </div>
 
