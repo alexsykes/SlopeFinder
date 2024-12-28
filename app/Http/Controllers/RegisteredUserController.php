@@ -19,8 +19,13 @@ class RegisteredUserController extends Controller
             'username' => ['required'],
             'email' => ['required', 'email', 'max:254'],
             'password' => ['required', Password::min(6), 'confirmed'],
-//            'hasAgreed' => ['boolean']
         ]);
+
+        if(request()->has('accept_terms')) {
+            $attrs['accept_terms'] = true;
+        }
+//
+//        dd($attrs);
 
         $user = User::create($attrs);
         Auth::login($user);

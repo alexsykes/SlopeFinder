@@ -140,7 +140,7 @@
 	</script><div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
 
 	@auth()
-<?php phpinfo(); ?>
+
 	@endauth
 
 	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>

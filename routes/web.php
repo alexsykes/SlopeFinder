@@ -1,5 +1,4 @@
 <?php
-
 use App\Models\Site;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
@@ -13,9 +12,11 @@ Route::get('/', function () {
 }
 );
 
+//  User registration
 Route::get('/register', [RegisteredUserController::class, 'create']) ;
 Route::post('/register', [RegisteredUserController::class, 'store']) ;
 
+//  User login
 Route::get('/login', [SessionController::class, 'create']) ;
 Route::post('/login', [SessionController::class, 'store']) ;
 Route::post('/logout', [SessionController::class, 'destroy']);
@@ -59,20 +60,17 @@ Route::get('sites/create', function () {
     return view('sites.create');
 });
 
-
 // Display data for a single site
 Route::get('/sitedetail/{id}', function($id) {
     $site = Site::find($id);
     return view('sitedetail', ['site' => $site]);
 });
 
-
 // Display data for a single site
 Route::get('/sites/{id}/edit', function($id) {
     $site = Site::find($id);
     return view('sites.edit', ['site' => $site]);
 });
-
 
 // Update
 Route::patch('/sitedetail/{id}', function($id) {
