@@ -110,7 +110,7 @@
 			// else {
 
 
-				httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);
+				{{--httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);--}}
 			// }
 		}
 		function httpGetAsync(theUrl, callback)
@@ -127,8 +127,6 @@
 		function myCallback(responseText) {
 			let forecast = document.getElementById("forecast");
 			let weatherData =  JSON.parse(responseText);
-			// let stringy = JSON.stringify(weatherData['current']['weather'][0]['description'], null, 5);
-			// console.log("responseText: " + responseText);
 			let lat = weatherData['lat'];
 			let sunrise = weatherData['daily'][0]['summary'];
 
@@ -140,5 +138,10 @@
 		}
 		initMap();
 	</script><div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
+
+	@auth()
+<?php phpinfo(); ?>
+	@endauth
+
 	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>
 </x-layout>
