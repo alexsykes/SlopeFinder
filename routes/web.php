@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Models\Site;
-use App\Http\Models\User;
+use App\Models\Site;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -11,32 +12,13 @@ Route::get('/', function () {
     return view('home', ['sites' => $sites]);
 }
 );
-// Display home page
-Route::get('/register', function () {
-    return view('auth/register');
-}
-);
 
-//  Process new site data
-Route::post('/register', function() {
-//    dd(request());
-//    validate
-    request()->validate([
-        'name' => ['required', 'min:3'],
-        'username' => ['required', 'min:3', 'unique:users'],
-        'email' => ['required', 'email', 'unique:users'],
-        'password' => ['required'],
-        'accept_terms' => ['required']
-    ]);
-//
-    User::create([
-        'name' => request('name'),
-        'email' => request('email'),
-        'password' => request('password')
-    ]);
+Route::get('/register', [RegisteredUserController::class, 'create']) ;
+Route::post('/register', [RegisteredUserController::class, 'store']) ;
 
-    return redirect('/register');
-});
+Route::get('/login', [SessionController::class, 'create']) ;
+Route::post('/login', [SessionController::class, 'store']) ;
+Route::post('/logout', [SessionController::class, 'destroy']);
 
 // Display all sites with pagination
 Route::get('/sitelist', function () {
@@ -45,13 +27,6 @@ Route::get('/sitelist', function () {
     $sites = Site::orderBy('site_name')->simplePaginate(30);
     return view('sitelist', ['sites' => $sites]);
 });
-
-// TODO Login
-Route::get('/login', function () {
-    return view('login');
-});
-
-
 
 //  Process new site data
 Route::post('/sites', function() {

@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
 	html,
 	body {
 		height: 100%;
@@ -11,13 +11,24 @@
 		width: 100%;
 	}
 
-	#markerForm {
-		display: none;
-	}
+</style>php -v
 
-</style>
 <script>
-	(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+	(g=>{
+		let h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__",
+				m = document, b = window;b=b[c]||(b[c]={});
+		let d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams,
+				u = () => h || (h = new Promise(async (f, n) => {
+					await (a = m.createElement("script"));
+					e.set("libraries", [...r] + "");
+					for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+					e.set("callback", c + ".maps." + q);
+					a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+					d[q] = f;
+					a.onerror = () => h = n(Error(p + " could not load."));
+					a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+					m.head.append(a)
+				}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f, ...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
 		key: "<?php $key = env("GMAP_LOCAL"); echo $key; ?>",
 		v: "weekly",
 		// Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
@@ -32,7 +43,7 @@
 		// Request needed libraries.
 		//@ts-ignore
 		const { Map } = await google.maps.importLibrary("maps");
-		const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
+		// const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
 
 		// The map, centered at position
 		map = new Map(document.getElementById("map"), {
@@ -40,14 +51,6 @@
 			center: position,
 			mapTypeId: google.maps.MapTypeId.TERRAIN,
 			mapId: "c2290875eac93973",
-		});
-
-		{{--const contentString = "<div><b>{{$site->site_name}}</b></div>";--}}
-		// The marker, positioned at Uluru
-		const marker = new AdvancedMarkerElement({
-			map: map,
-			position: position,
-			title: "{{$site->site_name}}",
 		});
 	}
 
