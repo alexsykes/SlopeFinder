@@ -8,7 +8,7 @@
             echo env('APP_NAME');
         } ?></title>
 </head>
-<body class="h-full bg-white">
+<body class="h-full bg-violet-50">
 
 <header class="bg-violet-800 drop-shadow-md">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  sm:flex sm:justify-between">
@@ -34,6 +34,15 @@
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {{ $slot }}
     </div>
+    <hr>
+    <x-footer-link>
+        <div class="text-center mx-auto text-violet-950">
+            <a href="/about" class="inline-block mt-1  hover:underline">About</a>
+            <a href="/privacy"  class="inline-block mt-1 mx-3 hover:underline">Privacy Policy</a>
+            <a href="/contact"  class="inline-block mt-1 mx-3 hover:underline">Contact</a>
+        </div>
+    </x-footer-link>
+    <div class="text-sm mt-1 text-center text-violet-950">©2025 - SlopFinder UK</div>
 </main>
 
 </body>

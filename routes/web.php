@@ -12,6 +12,25 @@ Route::get('/', function () {
 }
 );
 
+// Display about page
+Route::get('/about', function () {
+    return view('components/about');
+}
+);
+
+
+// Display privacy page
+Route::get('/privacy', function () {
+    return view('components/privacy');
+}
+);
+
+// Display contact page
+Route::get('/contact', function () {
+    return view('components/contact');
+}
+);
+
 //  User registration
 Route::get('/register', [RegisteredUserController::class, 'create']) ;
 Route::post('/register', [RegisteredUserController::class, 'store']) ;
