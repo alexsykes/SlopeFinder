@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create($attrs);
 
-        Mail::to($user)->send(
+        Mail::to($user)->queue(
             new newMember($user)
         );
 

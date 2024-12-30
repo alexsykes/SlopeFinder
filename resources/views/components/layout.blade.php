@@ -21,6 +21,7 @@
                 @endguest
 
                 @auth
+                        <x-nav-link href="/club/register" :active="request()->is('club/register')">Add a club</x-nav-link>
                     <form method="POST" action="/logout">
                         @csrf
                         <x-form-button>Log Out</x-form-button>
@@ -42,8 +43,7 @@
             <a href="/contact"  class="inline-block mt-1 mx-3 hover:underline">Contact</a>
         </div>
     </x-footer-link>
-    <div class="text-sm mt-1 text-center text-violet-950">©2025 - SlopFinder UK</div>
+    <div class="text-sm mt-1 text-center text-violet-950">©2025 - SlopeFinder UK</div>
 </main>
-
 </body>
 </html>
