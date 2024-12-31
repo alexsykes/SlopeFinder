@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  class="h-full bg-white">
 <head>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php if (env('APP_NAME') != ''){
             echo env('APP_NAME');
         } ?></title>
+
+
+
 </head>
 <body class="h-full bg-violet-50">
 
@@ -22,6 +26,7 @@
 
                 @auth
                         <x-nav-link href="/club/register" :active="request()->is('club/register')">Add a club</x-nav-link>
+                        <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
                     <form method="POST" action="/logout">
                         @csrf
                         <x-form-button>Log Out</x-form-button>
@@ -38,7 +43,7 @@
     <hr>
     <x-footer-link>
         <div class="text-center mx-auto text-violet-950">
-            <a href="/about" class="inline-block mt-1  hover:underline">About</a>
+            <a href="/about" class="inline-block mt-1 mx-3 hover:underline">About</a>
             <a href="/privacy"  class="inline-block mt-1 mx-3 hover:underline">Privacy Policy</a>
             <a href="/contact"  class="inline-block mt-1 mx-3 hover:underline">Contact</a>
         </div>

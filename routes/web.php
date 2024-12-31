@@ -1,5 +1,8 @@
 <?php
+
+use App\Models\Club;
 use App\Models\Site;
+use App\Models\User;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +50,17 @@ Route::post('/register', [RegisteredUserController::class, 'store']) ;
 Route::get('/login', [SessionController::class, 'create']) ;
 Route::post('/login', [SessionController::class, 'store']) ;
 Route::post('/logout', [SessionController::class, 'destroy']);
+
+//User profile
+Route::get('auth/profile', function () {
+//    $clubs = Auth()->id()->clubs();
+
+    $userID = Auth()->id();
+    $userDetails = User::find($userID);
+
+    dd($userDetails);
+    return view('auth.profile');
+}) ;
 
 Route::get('/club/register', [\App\Http\Controllers\ClubController::class, 'create']) ;
 Route::post('/club/register', [\App\Http\Controllers\ClubController::class, 'registerClub']) ;
