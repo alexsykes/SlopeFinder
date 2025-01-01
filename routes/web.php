@@ -65,6 +65,15 @@ Route::get('auth/profile', function () {
 Route::get('/club/register', [\App\Http\Controllers\ClubController::class, 'create']) ;
 Route::post('/club/register', [\App\Http\Controllers\ClubController::class, 'registerClub']) ;
 
+Route::get('/club/edit', [\App\Http\Controllers\ClubController::class, 'update']) ;
+
+
+// Update data for a single club
+Route::get('/club/update/{id}', function($id) {
+    $club = Club::find($id);
+    return view('club.update', ['club' => $club]);
+});
+
 // Display all sites with pagination
 Route::get('/sitelist', function () {
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  class="h-full bg-white">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  class="h-full bg-violet-800">
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
 
 
 </head>
-<body class="h-full bg-violet-50">
+<body class="h-full bg-violet-950 text-white">
 
 <header class="bg-violet-800 drop-shadow-md">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  sm:flex sm:justify-between">
@@ -25,7 +25,7 @@
                 @endguest
 
                 @auth
-                        <x-nav-link href="/club/register" :active="request()->is('club/register')">Add a club</x-nav-link>
+                        <!--x-nav-link href="/club/register" :active="request()->is('club/register')">Add a club</x-nav-link -->
                         <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
                     <form method="POST" action="/logout">
                         @csrf
@@ -36,19 +36,20 @@
         </div>
     </div>
 </header>
-<main>
+<main class="bg-white text-violet-800">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {{ $slot }}
     </div>
     <hr>
+    <div class = "bg-violet-950 text-white">
     <x-footer-link>
-        <div class="text-center mx-auto text-violet-950">
+        <div class="text-center mx-auto  text-white">
             <a href="/about" class="inline-block mt-1 mx-3 hover:underline">About</a>
             <a href="/privacy"  class="inline-block mt-1 mx-3 hover:underline">Privacy Policy</a>
             <a href="/contact"  class="inline-block mt-1 mx-3 hover:underline">Contact</a>
         </div>
     </x-footer-link>
-    <div class="text-sm mt-1 text-center text-violet-950">©2025 - SlopeFinder UK</div>
+    <div class="text-sm mt-1 text-center bg-violet-950 text-white">©2025 - SlopeFinder UK</div></div>
 </main>
 </body>
 </html>
