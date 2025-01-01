@@ -10,12 +10,23 @@
 {{--        </div>--}}
         @csrf
         <div class="space-y-12">
+
+{{--            @php dd(Auth::user()->clubs()) @endphp--}}
             <div class="mt-6  gap-x-6 gap-y-8 text-sm font-light text-violet-600">
                 <div class="mt-2" id="email">Name: {{Auth::user()->name}}</div>
                 <div class="mt-2" id="email">Username: {{Auth::user()->username}}</div>
                 <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>
-                <div class="mt-2" id="email">My Sites: {{Auth::user()->email}}</div>
-                <div class="mt-2" id="email">My Clubs: {{Auth::user()->email}}</div>
+                <div class="mt-2" id="email">My Sites: {{Auth::user()->getEmailForVerification()}}</div>
+                <div class="mt-2" id="email">My Clubs:
+                    @php
+                        $clubs = Auth::user()->clubs;
+
+                        foreach ($clubs as $club) {
+                    @endphp
+                    <div class="ml-4">{{ $club->name }}</div>
+                    @php
+                        }
+                    @endphp </div>
 
             </div>
         </div>

@@ -58,7 +58,7 @@ Route::get('auth/profile', function () {
     $userID = Auth()->id();
     $userDetails = User::find($userID);
 
-    dd($userDetails);
+//    dd($userDetails);
     return view('auth.profile');
 }) ;
 
