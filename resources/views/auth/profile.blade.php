@@ -13,11 +13,22 @@
 
 {{--            @php dd(Auth::user()->clubs()) @endphp--}}
             <div class="mt-6  gap-x-6 gap-y-8 text-sm font-light text-violet-600">
-                <div class="mt-2" id="email">Name: {{Auth::user()->name}}</div>
-                <div class="mt-2" id="email">Username: {{Auth::user()->username}}</div>
+                <div class="mt-2" id="name">Name: {{Auth::user()->name}}</div>
+                <div class="mt-2" id="username">Username: {{Auth::user()->username}}</div>
                 <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>
-                <div class="mt-2" id="email">My Sites: {{Auth::user()->getEmailForVerification()}}</div>
-                <div class="mt-2" id="email">My Clubs:
+                <div class="mt-2" id="mysites">My Sites:
+                    @php
+                        $sites = Auth::user()->sites;
+
+                        foreach ($sites as $site) {
+                    @endphp
+                    <div class="ml-4" >{{ $site->site_name }}</div>
+                    @php
+                        }
+                    @endphp
+
+                   </div>
+                <div class="mt-2" id="myclubs">My Clubs:
                     @php
                         $clubs = Auth::user()->clubs;
 
