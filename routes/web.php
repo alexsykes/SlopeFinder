@@ -36,12 +36,12 @@ Route::get('/contact', function () {
 
 
 
-Route::get('test', function () {
-    $job = Job::first();
-    \App\Jobs\WelcomeUser::dispatch($job);
-
-    return 'Done';
-});
+//Route::get('test', function () {
+//    $job = Job::first();
+//    \App\Jobs\WelcomeUser::dispatch($job);
+//
+//    return 'Done';
+//});
 //  User registration
 Route::get('/register', [RegisteredUserController::class, 'create']) ;
 Route::post('/register', [RegisteredUserController::class, 'store']) ;
@@ -55,8 +55,8 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 Route::get('auth/profile', function () {
 //    $clubs = Auth()->id()->clubs();
 
-    $userID = Auth()->id();
-    $userDetails = User::find($userID);
+//    $userID = Auth()->id();
+//    $userDetails = User::find($userID);
 
 //    dd($userDetails);
     return view('auth.profile');
@@ -73,6 +73,9 @@ Route::get('/club/update/{id}', function($id) {
     $club = Club::find($id);
     return view('club.update', ['club' => $club]);
 });
+
+
+Route::patch('/club/update/{id}', [\App\Http\Controllers\ClubController::class, 'update']) ;
 
 // Display all sites with pagination
 Route::get('/sitelist', function () {

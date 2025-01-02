@@ -35,7 +35,7 @@
 
                         foreach ($clubs as $club) {
                     @endphp
-                    <div class="ml-4"><a href="/club/create/{{ $club->id }}">{{ $club->name }}</a></div>
+                    <div class="ml-4"><a href="/club/update/{{ $club->id }}">{{ $club->name }}</a></div>
                     @php
                         }
                     @endphp </div>

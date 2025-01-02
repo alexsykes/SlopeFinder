@@ -13,9 +13,23 @@ class ClubController extends Controller
         return view('club.register');
     }
 
-    public function update() {
-        dd("stop");
-    return view('club.update');
+    public function update($id) {
+
+
+        $user = Auth::user();
+        $userid = $user->id;
+        $attrs = request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'contact_name' => 'required',
+            'contact_email' =>  ['required', 'email', 'max:254'],
+        ]);
+
+        $attrs['updated_by'] = $userid;
+
+        $club = Club::findOrFail($id);
+        $club->update($attrs);
+        return redirect( '/auth/profile');
 }
 
     public function registerClub() {
