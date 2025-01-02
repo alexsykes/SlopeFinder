@@ -5,7 +5,9 @@ use App\Models\Site;
 use App\Models\User;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\ClubController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 // Display home page
@@ -34,15 +36,11 @@ Route::get('/contact', function () {
 }
 );
 
-
-
-//Route::get('test', function () {
-//    $job = Job::first();
-//    \App\Jobs\WelcomeUser::dispatch($job);
-//
-//    return 'Done';
-//});
-//  User registration
+// Display contact page
+Route::get('/clublist', function () {
+    $clubs = Club::orderBy('name')->get();
+    return view('club.listing', ['clubs' => $clubs]);
+});
 Route::get('/register', [RegisteredUserController::class, 'create']) ;
 Route::post('/register', [RegisteredUserController::class, 'store']) ;
 
@@ -53,34 +51,22 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 
 //User profile
 Route::get('auth/profile', function () {
-//    $clubs = Auth()->id()->clubs();
-
-//    $userID = Auth()->id();
-//    $userDetails = User::find($userID);
-
-//    dd($userDetails);
     return view('auth.profile');
 }) ;
 
-Route::get('/club/register', [\App\Http\Controllers\ClubController::class, 'create']) ;
-Route::post('/club/register', [\App\Http\Controllers\ClubController::class, 'registerClub']) ;
-
-Route::get('/club/edit', [\App\Http\Controllers\ClubController::class, 'update']) ;
-
-
-// Update data for a single club
+Route::get('/club/register', [ClubController::class, 'create']) ;
+Route::post('/club/register', [ClubController::class, 'registerClub']) ;
+Route::get('/club/edit', [ClubController::class, 'update']) ;
 Route::get('/club/update/{id}', function($id) {
     $club = Club::find($id);
     return view('club.update', ['club' => $club]);
 });
 
 
-Route::patch('/club/update/{id}', [\App\Http\Controllers\ClubController::class, 'update']) ;
+Route::patch('/club/update/{id}', [ClubController::class, 'update']) ;
 
 // Display all sites with pagination
 Route::get('/sitelist', function () {
-
-//    $sites = Site::latest()->simplePaginate(25);
     $sites = Site::orderBy('site_name')->simplePaginate(30);
     return view('sitelist', ['sites' => $sites]);
 });
@@ -141,6 +127,8 @@ Route::patch('/sitedetail/{id}', function($id) {
     ]);
 //    Authorise
 //    update
+    $user = Auth::user();
+    $userid = $user->id;
     $site = Site::findOrFail($id);
     $site->update([
         'site_name' => request('site_name'),
@@ -150,9 +138,10 @@ Route::patch('/sitedetail/{id}', function($id) {
         'site_wind_directions' => request('site_wind_directions'),
         'lat'   => request('lat'),
         'lng'   => request('lng'),
-        'w3w'   => request('w3w')
+        'w3w'   => request('w3w'),
+        'updated_by'   => $userid,
     ]);
-    return redirect('/sitedetail/' . $site->id);
+    return redirect('/auth/profile');
 });
 
 // Destroy

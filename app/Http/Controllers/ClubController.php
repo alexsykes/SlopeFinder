@@ -23,6 +23,7 @@ class ClubController extends Controller
             'description' => 'required',
             'contact_name' => 'required',
             'contact_email' =>  ['required', 'email', 'max:254'],
+            'website' => 'max:254',
         ]);
 
         $attrs['updated_by'] = $userid;
@@ -33,6 +34,7 @@ class ClubController extends Controller
 }
 
     public function registerClub() {
+
         $user = Auth::user();
         $userid = $user->id;
         $attrs = request()->validate([
@@ -40,6 +42,7 @@ class ClubController extends Controller
             'description' => 'required',
             'contact_name' => 'required',
             'contact_email' =>  ['required', 'email', 'max:254'],
+            'website' => 'max:254',
         ]);
         $attrs['created_by'] = $userid;
 //        dd($attrs);

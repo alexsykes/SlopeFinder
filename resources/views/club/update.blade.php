@@ -19,9 +19,6 @@
                         <x-form-error name="name" />
                     </div>
                 </x-form-field>
-                    <x-form-input type="hidden" name="id" id="id" value="{{$club->id}}">
-
-                    </x-form-input>
 
                 <x-form-field>
                     <x-form-label for="contact_name">Contact Name</x-form-label>
@@ -36,6 +33,14 @@
                     <div class="mt-2">
                         <x-form-input name="contact_email" type="email" id="contact_email" value="{{$club->contact_email}}"  required />
                         <x-form-error name="contact_email" />
+                    </div>
+                </x-form-field>
+
+                <x-form-field>
+                    <x-form-label for="website">Website</x-form-label>
+                    <div class="mt-2">
+                        <x-form-input name="website"  id="website" value="{{$club->website}}"  required />
+                        <x-form-error name="website" />
                     </div>
                 </x-form-field>
 
