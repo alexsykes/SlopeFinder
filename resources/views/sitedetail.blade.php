@@ -5,7 +5,57 @@
 			width: 100%;
 		}
 	</style>
+
 	<script>
+		function setCookie(name, value, expires)   {
+			document.cookie = name + "=" + escape(value) + "; path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+		}
+
+		function getCookie(c_name)  {
+			if (document.cookie.length>0)
+			{
+				c_start=document.cookie.indexOf(c_name + "=");
+				if (c_start!=-1)
+				{
+					c_start=c_start + c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					if (c_end==-1) c_end=document.cookie.length;
+					return unescape(document.cookie.substring(c_start,c_end));
+				}
+			}
+			return "";
+		}
+
+		window.onbeforeunload = function(){
+			var mapzoom=map.getZoom();
+			var mapcenter=map.getCenter();
+			var maplat=mapcenter.lat();
+			var maplng=mapcenter.lng();
+			var maptypeid=map.getMapTypeId();
+			var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
+//      Expire at end of session
+			setCookie("mapSettings",cookiestring);
+		}
+
+		async function initMap() {
+			const position = { lat:
+						{{$site->lat}}, lng: {{$site->lng}} };
+			// Request needed libraries.
+			//@ts-ignore
+			const { Map } = await google.maps.importLibrary("maps");
+			const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
+
+			// The map, centered at position
+			map = new Map(document.getElementById("map"), {
+				zoom: 12,
+				center: position,
+				mapTypeId: google.maps.MapTypeId.TERRAIN,
+				mapId: "c2290875eac93973",
+			});
+
+		}
+
+
 		(g=>{
 			let h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__",
 					m = document, b = window;b=b[c]||(b[c]={});
@@ -28,23 +78,6 @@
 		});
 
 		let map;
-
-		async function initMap() {
-			const position = { lat:
-						{{$site->lat}}, lng: {{$site->lng}} };
-			// Request needed libraries.
-			//@ts-ignore
-			const { Map } = await google.maps.importLibrary("maps");
-			// const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
-
-			// The map, centered at position
-			map = new Map(document.getElementById("map"), {
-				zoom: 12,
-				center: position,
-				mapTypeId: google.maps.MapTypeId.TERRAIN,
-				mapId: "c2290875eac93973",
-			});
-		}
 
 		initMap();
 	</script>

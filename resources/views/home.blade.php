@@ -1,5 +1,5 @@
 <x-layout>
-	<style type="text/css">
+	<style >
 		html,
 		body {
 			height: 100%;
@@ -19,6 +19,8 @@
 	</style>
 <x-slot:heading>SlopeFinder Demo</x-slot:heading>
 	<script>
+
+
 		(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
 			key: "{{env('GMAP_LOCAL')}}",
 			v: "weekly",
@@ -26,15 +28,12 @@
 			// Add other bootstrap parameters as needed, using camel case.
 		});
 
-
 		let map;
 		function showPosition(position) {
 			const x = document.getElementById("demo");
 			x.innerHTML = "Latitude: " + position.coords.latitude +
 					"<br>Longitude: " + position.coords.longitude;
 		}
-
-
 
 		async function initMap() {
 			const markerData = <?php echo json_encode($sites); ?>;
@@ -63,7 +62,7 @@
 
 						for (i = 0; i < markerData.length; i++) {
 									const thisMarker = markerData[i];
-									const id = thisMarker['id'];
+									// const id = thisMarker['id'];
 									const lat = thisMarker['lat'];
 									const lng = thisMarker['lng'];
 									const name = thisMarker['site_name'];
