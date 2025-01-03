@@ -11,11 +11,6 @@
 			height: 600px;
 			width: 100%;
 		}
-
-		#markerForm {
-			display: none;
-		}
-
 	</style>
 @php
 //	$data = file_get_contents('https://api.openweathermap.org/data/3.0/onecall?lat=53.8&lon=-2&units=metric&exclude=minutely&appid=6aff05a2599912b387c2b5390360cc84');
@@ -26,9 +21,7 @@ $cookie_name = 'mapSettings';
 $lat = 54;
 $lng = -2;
 $zoom = 12;
-if(!isset($_COOKIE[$cookie_name])) {
-//  dd( "Cookie named '" . $cookie_name . "' is not set!");
-} else {
+if(isset($_COOKIE[$cookie_name])) {
     $cookieData = $_COOKIE[$cookie_name];
 	$cookieArray = explode('_', $cookieData);
 
