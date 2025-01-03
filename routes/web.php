@@ -13,26 +13,33 @@ use Illuminate\Support\Facades\Auth;
 // Display home page
 Route::get('/', function () {
     $sites = Site::all();
-    return view('home', ['sites' => $sites]);
+    $randomSite = Site::inRandomOrder()->first();
+    return view('home', ['sites' => $sites, 'randomSite' => $randomSite]);
 }
 );
 
 // Display about page
 Route::get('/about', function () {
-    return view('components/about');
+    return view('static/about');
+}
+);
+
+// Display about page
+Route::get('/terms', function () {
+    return view('static/terms');
 }
 );
 
 
 // Display privacy page
 Route::get('/privacy', function () {
-    return view('components/privacy');
+    return view('static/privacy');
 }
 );
 
 // Display contact page
 Route::get('/contact', function () {
-    return view('components/contact');
+    return view('static/contact');
 }
 );
 

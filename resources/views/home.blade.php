@@ -17,7 +17,7 @@
 		}
 
 	</style>
-<x-slot:heading>SlopeFinder Demo</x-slot:heading>
+	<x-slot:heading>SlopeFinder</x-slot:heading>
 	<script>
 
 
@@ -42,10 +42,11 @@
 			//@ts-ignore
 			const { Map } = await google.maps.importLibrary("maps");
 			const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
+			const { PinElement } = await google.maps.importLibrary("marker");
 
 			const position = { lat: 54.543, lng: -2.7764678 };
 			map = new Map(document.getElementById("map"), {
-				zoom: 10,
+				zoom: 13,
 				center: position,
 				streetViewControl: false,
 				mapTypeControl: false,
@@ -60,57 +61,67 @@
 			});
 
 
-						for (i = 0; i < markerData.length; i++) {
-									const thisMarker = markerData[i];
-									// const id = thisMarker['id'];
-									const lat = thisMarker['lat'];
-									const lng = thisMarker['lng'];
-									const name = thisMarker['site_name'];
+			for (i = 0; i < markerData.length; i++) {
+				const thisMarker = markerData[i];
+				// const id = thisMarker['id'];
+				const lat = parseFloat(thisMarker['lat']);
+				const lng = parseFloat(thisMarker['lng']);
+				const name = thisMarker['site_name'];
 
-									const direction = thisMarker['site_wind_directions'];
-									const description = thisMarker['site_description'];
-									const access = thisMarker['site_access'];
-									// const facings = JSON.parse(thisMarker[8]);
-					    // console.log(facings);
-					// 				const link = "<a href=\"https://temporary.slopefinder.uk/index.php/site-list/sitedetail/" + id + "\">Click for details</a>";
+				const direction = thisMarker['site_wind_directions'];
+				const description = thisMarker['site_description'];
+				const access = thisMarker['site_access'];
 
-					//    const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div><div><a href=\"<?php //echo $editLink; ?>"  + id + "\">Edit</a></div>"  ;
+				const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+				//    console.log("lat: " + lat + " lng: " + lng);
+				const position = new google.maps.LatLng(lat, lng);
+				const marker = new AdvancedMarkerElement({
+					map: map,
+					position: position,
+					title: name,
+				});
+			}
 
-									const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
-					//    console.log("lat: " + lat + " lng: " + lng);
-									const position = new google.maps.LatLng(lat, lng);
-									const marker = new AdvancedMarkerElement({
-										map: map,
-										position: position,
-										title: name,
-									});
-									// /
-							marker.addListener("click", () => {
-								infoWindow.setHeaderContent(name);
-								infoWindow.setContent(content);
-								infoWindow.open(map, marker);
-								map.panTo(marker.position)
-								map.setZoom(13);
+			const pinBorder = new PinElement({
+				borderColor: "black",
+				glyphColor: "white",
+			});
+			const randomSite = <?php echo json_encode($randomSite); ?>;
+			const thisMarker = randomSite;
+			const lat = parseFloat(thisMarker['lat']);
+			const lng = parseFloat(thisMarker['lng']);
+			const name = "Random site: " + thisMarker['site_name'];
 
-								infoWindow.addListener('closeclick', ()=>{
-									//       map.setZoom(10);
-									//       map.panTo(marker.position)
-								});
+			const direction = thisMarker['site_wind_directions'];
+			const description = thisMarker['site_description'];
+			const access = thisMarker['site_access'];
 
-									});
-								}
-			// if (navigator.geolocation) {
-			// 	navigator.geolocation.getCurrentPosition(function (position) {
-			// 		initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			// 		map.setCenter(initialLocation);
-			// 			});
-			// 	httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=metric&exclude=minutely&appid=",myCallback)
-			// }
-			// else {
+			const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+
+			const marker = new AdvancedMarkerElement({
+				map: map,
+				position: { lat: lat, lng: lng },
+				title: name,
+				content: pinBorder.element,
+			});
+			map.panTo(marker.position);
 
 
-				{{--httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);--}}
-			// }
+				// /
+				marker.addListener("click", () => {
+					infoWindow.setHeaderContent(name);
+					infoWindow.setContent(content);
+					infoWindow.open(map, marker);
+					map.panTo(marker.position)
+					map.setZoom(13);
+
+					infoWindow.addListener('closeclick', ()=>{
+						      map.setZoom(10);
+						      map.panTo(marker.position)
+					});
+				});
+
+			{{--httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);--}}
 		}
 		function httpGetAsync(theUrl, callback)
 		{
@@ -132,15 +143,53 @@
 			let hourlyData = weatherData['hourly'];
 			for ( let i in hourlyData) {
 				console.log( i + ":: Wind: " + hourlyData[i]['wind_speed'] + " at " + hourlyData[i]['wind_deg'] + "°")
-				}
+			}
 			forecast.innerHTML = "Current Wind:";
 		}
-		initMap();
-	</script><div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
 
+		async function addRandomSite() {
+			const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+			const randomSite = <?php echo json_encode($randomSite); ?>;
+			const thisMarker = randomSite;
+			const lat = thisMarker['lat'];
+			const lng = thisMarker['lng'];
+			const name = thisMarker['site_name'];
+
+			const direction = thisMarker['site_wind_directions'];
+			const description = thisMarker['site_description'];
+			const access = thisMarker['site_access'];
+
+			const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+
+			const marker = new AdvancedMarkerElement({
+				map: map,
+				position: { lat: 37.4239163, lng: -122.0947209 },
+				title: name,
+			});
+			map.panTo(marker.position);
+		}
+
+		initMap();
+		// addRandomSite();
+	</script>
+
+	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
+	<div class="text-black">
+		<div class="mt-2 text-violet-900">What's it all about?</div>
+		<div class="px-4 text-sm">A fairly comprehensive directory with slope-soaring and weather data - what more do you want? The map here shows one of our many sites selected at random. Click on the marker for full details and an up-to-date wind forecast.</div>
+		<div class="mt-2 text-violet-900">History</div>
+		<div  class="px-4 text-sm" >Quite a few years ago, Simon Stephens set up his WeatherPermitting website - don't go looking for it, it's not there now - although it's in the online <a class="hover: underline" href="https://web.archive.org/web/20240815163158/http://weatherpermitting.xyz" target="_blank"> Wayback Machine</a>. The site gathered together details of several hundred slope soaring sites throughout the British Isles. Although it no longer exists, Simon has generously shared the data which is available here for the benefit of the soaring community.<br>The current site uses and extends this data to offer a continuation of that approach.
+		</div>
+		<div class="mt- text-violet-900">Why do I need to register?</div>
+		<div class="px-4 text-sm">Several reasons. Firstly, registration will give you full access to the site's database of slopes. Secondly,to accept the Conditions of Use of the site and confirm that you will respect landowners, clubs and other users. And finally, you will be able to make your own contribution by adding new or updating existing site information.</div>
+		<div class="mt-2 text-violet-900">I had an account on WeatherPermitting - do I need to register?</div>
+		<div class="px-4 text-sm">Hopefully, not. Your account detail was provided by Simon and, although it's not been properly tested, it is quite possible that you will be able to login. If you can't login, you should be able to use the 'Lost Password' link.</div>
+		<div class="mt-2 text-violet-900">When can I register?</div>
+		<div class="px-4 text-sm">Shortly - we're still in development but hopeful of providing a basic service within the next month or so…</div>
+	</div>
 	@auth()
 
 	@endauth
 
-	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>
+{{--	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>--}}
 </x-layout>
