@@ -20,6 +20,15 @@ class Site extends Model {
         return $sites;
     }
 
+    static function getFiveSites() {
+        $sites = Site::where('published', 1)
+            ->orderBy('site_name')
+            ->limit(1)
+            ->get();
+
+        return $sites;
+    }
+
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class)->orderBy('id','asc');

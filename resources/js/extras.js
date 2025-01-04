@@ -1,5 +1,6 @@
+/*
 function setCookie(name, value, expires)   {
-    document.cookie = name + "=" + escape(value) + "; path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+    document.cookie = name + "=" + escape(value) + "; SameSite=None; path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
 }
 
 function getCookie(c_name)  {
@@ -15,4 +16,4 @@ function getCookie(c_name)  {
         }
     }
     return "";
-}
+}*/

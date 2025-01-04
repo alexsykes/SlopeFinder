@@ -1,14 +1,26 @@
 <x-layout>
-	<style>
+	<style >
 		#map {
 			height: 600px;
 			width: 100%;
 		}
-	</style>
+	</style >
 
 	<script>
+		window.onbeforeunload = function(){
+			var mapzoom=map.getZoom();
+			var mapcenter=map.getCenter();
+			var maplat=mapcenter.lat();
+			var maplng=mapcenter.lng();
+			var maptypeid=map.getMapTypeId();
+			var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
+			console.log('setting cookie');
+//      Expire at end of session
+			setCookie("mapSettings",cookiestring);
+		}
+
 		function setCookie(name, value, expires)   {
-			document.cookie = name + "=" + escape(value) + "; path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+			document.cookie = name + "=" + escape(value) + "; Secure; SameSite=None;  path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
 		}
 
 		function getCookie(c_name)  {
@@ -51,7 +63,22 @@
 				center: position,
 				mapTypeId: google.maps.MapTypeId.TERRAIN,
 				mapId: "c2290875eac93973",
+			})
+
+			const contentString = "<div><b>{{$site->site_name}}</b></div>";
+			// The marker, positioned at Uluru
+			const marker = new AdvancedMarkerElement({
+				map: map,
+				position: position,
+				title:"{{$site->site_name}}",
 			});
+			// var infoWindow = new google.maps.InfoWindow({
+			// 	size: new google.maps.Size(150,50)
+			// });
+			//      marker.addListener("click", () => {
+            //      infoWindow.setContent(contentString);
+            //      infoWindow.open(map, marker);
+            //    });
 
 		}
 

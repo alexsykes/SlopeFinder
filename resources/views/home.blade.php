@@ -19,7 +19,24 @@
 	</style>
 	<x-slot:heading>SlopeFinder</x-slot:heading>
 	<script>
+		function setCookie(name, value, expires)   {
+			document.cookie = name + "=" + escape(value) + "; Secure; SameSite=None;  path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+		}
 
+		function getCookie(c_name)  {
+			if (document.cookie.length>0)
+			{
+				c_start=document.cookie.indexOf(c_name + "=");
+				if (c_start!=-1)
+				{
+					c_start=c_start + c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					if (c_end==-1) c_end=document.cookie.length;
+					return unescape(document.cookie.substring(c_start,c_end));
+				}
+			}
+			return "";
+		}
 
 		(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
 			key: "{{env('GMAP_LOCAL')}}",
@@ -29,6 +46,19 @@
 		});
 
 		let map;
+
+		window.onbeforeunload = function(){
+			var mapzoom=map.getZoom();
+			var mapcenter=map.getCenter();
+			var maplat=mapcenter.lat();
+			var maplng=mapcenter.lng();
+			var maptypeid=map.getMapTypeId();
+			var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
+			console.log('setting cookie');
+//      Expire at end of session
+			setCookie("mapSettings",cookiestring);
+		}
+
 		function showPosition(position) {
 			const x = document.getElementById("demo");
 			x.innerHTML = "Latitude: " + position.coords.latitude +
@@ -66,19 +96,38 @@
 				// const id = thisMarker['id'];
 				const lat = parseFloat(thisMarker['lat']);
 				const lng = parseFloat(thisMarker['lng']);
+				@guest
+				const name = "Want to see more?";
+				@endguest
+
+				@auth
 				const name = thisMarker['site_name'];
+				@endauth
 
 				const direction = thisMarker['site_wind_directions'];
 				const description = thisMarker['site_description'];
 				const access = thisMarker['site_access'];
-
-				const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+				@guest
+				 content = "<div>For full access to over 300 sites<br><strong><a href=\"/register\">Register  here</a></strong></div>";
+				@endguest
 				//    console.log("lat: " + lat + " lng: " + lng);
 				const position = new google.maps.LatLng(lat, lng);
 				const marker = new AdvancedMarkerElement({
 					map: map,
 					position: position,
 					title: name,
+				});
+				marker.addListener("click", () => {
+					infoWindow.setHeaderContent(name);
+					infoWindow.setContent(content);
+					infoWindow.open(map, marker);
+					map.panTo(marker.position)
+					map.setZoom(13);
+
+					infoWindow.addListener('closeclick', ()=>{
+						map.setZoom(10);
+						map.panTo(marker.position)
+					});
 				});
 			}
 
@@ -96,7 +145,7 @@
 			const description = thisMarker['site_description'];
 			const access = thisMarker['site_access'];
 
-			const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+			 content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
 
 			const marker = new AdvancedMarkerElement({
 				map: map,
@@ -107,22 +156,23 @@
 			map.panTo(marker.position);
 
 
-				// /
-				marker.addListener("click", () => {
-					infoWindow.setHeaderContent(name);
-					infoWindow.setContent(content);
-					infoWindow.open(map, marker);
-					map.panTo(marker.position)
-					map.setZoom(13);
+			// /
+			marker.addListener("click", () => {
+				infoWindow.setHeaderContent(name);
+				infoWindow.setContent(content);
+				infoWindow.open(map, marker);
+				map.panTo(marker.position)
+				map.setZoom(13);
 
-					infoWindow.addListener('closeclick', ()=>{
-						      map.setZoom(10);
-						      map.panTo(marker.position)
-					});
+				infoWindow.addListener('closeclick', ()=>{
+					map.setZoom(10);
+					map.panTo(marker.position)
 				});
+			});
 
 			{{--httpGetAsync("https://api.openweathermap.org/data/3.0/onecall?lat=" + position.lat +"&lon=" + position.lng + "&units=metric&exclude=minutely&appid=<?php echo env('OPEN_WEATHER'); ?>" ,myCallback);--}}
 		}
+
 		function httpGetAsync(theUrl, callback)
 		{
 			var xmlHttp = new XMLHttpRequest();
@@ -159,7 +209,7 @@
 			const description = thisMarker['site_description'];
 			const access = thisMarker['site_access'];
 
-			const content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+			 content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
 
 			const marker = new AdvancedMarkerElement({
 				map: map,
@@ -167,6 +217,8 @@
 				title: name,
 			});
 			map.panTo(marker.position);
+
+
 		}
 
 		initMap();
@@ -191,5 +243,5 @@
 
 	@endauth
 
-{{--	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>--}}
+	{{--	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="forecast"></div>--}}
 </x-layout>

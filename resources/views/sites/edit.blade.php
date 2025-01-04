@@ -18,6 +18,9 @@
                     {{--          @php--}}
                     {{--              dump($site['site_description']);--}}
                     {{--          @endphp--}}
+                    <div id="map" class="col-span-full">
+                        Map goes here
+                    </div>
                     <div class="sm:col-span-4">
 
                         <label for="site_name" class="block text-sm/6 font-medium text-gray-900">Name</label>

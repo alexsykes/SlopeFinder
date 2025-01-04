@@ -19,9 +19,10 @@
         <h1 class="text-3xl font-bold tracking-tight text-white">{{ $heading }}</h1>
         <div class="hidden md:block">
             <div class="ml-4 flex space-x-4 items-center m-auto px md:ml-6" >
+                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 @guest
                     <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
-                    <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
+                    <!-- x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link -->
                 @endguest
 
                 @auth
@@ -36,7 +37,7 @@
         </div>
     </div>
 </header>
-<main class="bg-white text-violet-800">
+<main class="bg-white text-black">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {{ $slot }}
     </div>
@@ -47,6 +48,9 @@
             <a href="/about" class="inline-block mt-1 mx-3 hover:underline">About</a>
             <a href="/terms" class="inline-block mt-1 mx-3 hover:underline">Terms and Conditions</a>
             <a href="/clublist" class="inline-block mt-1 mx-3 hover:underline">Clubs</a>
+            @auth
+            <a href="/sitelist" class="inline-block mt-1 mx-3 hover:underline">Site Directory</a>
+            @endauth
             <a href="/privacy"  class="inline-block mt-1 mx-3 hover:underline">Privacy Policy</a>
             <a href="/contact"  class="inline-block mt-1 mx-3 hover:underline">Contact</a>
         </div>
