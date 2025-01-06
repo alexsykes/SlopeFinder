@@ -4,20 +4,132 @@
     </x-slot:heading>
     <form method="POST" action="/sitedetail/{{ $site->id }}">
         @csrf
-        @method('PATCH')
+        @method('PATCH')	<style >
+            #map {
+                height: 600px;
+                width: 100%;
+            }
+        </style >
+        <script>
+
+            window.onbeforeunload = function(){
+                var mapzoom=map.getZoom();
+                var mapcenter=map.getCenter();
+                var maplat=mapcenter.lat();
+                var maplng=mapcenter.lng();
+                var maptypeid=map.getMapTypeId();
+                var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
+                // console.log('setting cookie');
+//      Expire at end of session
+                setCookie("mapSettings",cookiestring);
+            }
+
+            function setCookie(name, value, expires)   {
+                document.cookie = name + "=" + escape(value) + "; Secure; SameSite=None;  path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
+            }
+
+            function getCookie(c_name)  {
+                if (document.cookie.length>0)
+                {
+                    c_start=document.cookie.indexOf(c_name + "=");
+                    if (c_start!=-1)
+                    {
+                        c_start=c_start + c_name.length+1;
+                        c_end=document.cookie.indexOf(";",c_start);
+                        if (c_end==-1) c_end=document.cookie.length;
+                        return unescape(document.cookie.substring(c_start,c_end));
+                    }
+                }
+                return "";
+            }
+
+            window.onbeforeunload = function(){
+                var mapzoom=map.getZoom();
+                var mapcenter=map.getCenter();
+                var maplat=mapcenter.lat();
+                var maplng=mapcenter.lng();
+                var maptypeid=map.getMapTypeId();
+                var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
+//      Expire at end of session
+                setCookie("mapSettings",cookiestring);
+            }
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+
+            });
+
+            async function initMap() {
+                const position = { lat:
+                            {{$site->lat}}, lng: {{$site->lng}} };
+                // Request needed libraries.
+                //@ts-ignore
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
+
+                // Instantiate map, centered at position
+                map = new Map(document.getElementById("map"), {
+                    zoom: 12,
+                    center: position,
+                    streetViewControl: false,
+                    mapTypeId: google.maps.MapTypeId.TERRAIN,
+                    mapId: "c2290875eac93973",
+                })
+
+                // Define lat and lng inputs so that they can be updated when marker is dragged
+                let lngInput = document.getElementById('lng');
+                let latInput = document.getElementById('lat');
+
+                const marker = new AdvancedMarkerElement({
+                    map: map,
+                    position: position,
+                    title:"{{$site->site_name}}",
+                    gmpDraggable: true,
+                });
+
+                marker.addListener("dragend", (event) => {
+                    const position = marker.position;
+
+                    latInput.value = position.lat.toFixed(6)  ;
+                    lngInput.value = position.lng.toFixed(6)  ;
+                });
+
+
+            }
+
+
+            (g=>{
+                let h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__",
+                    m = document, b = window;b=b[c]||(b[c]={});
+                let d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams,
+                    u = () => h || (h = new Promise(async (f, n) => {
+                        await (a = m.createElement("script"));
+                        e.set("libraries", [...r] + "");
+                        for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+                        e.set("callback", c + ".maps." + q);
+                        a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+                        d[q] = f;
+                        a.onerror = () => h = n(Error(p + " could not load."));
+                        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+                        m.head.append(a)
+                    }));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f, ...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+                key: "<?php $key = env("GMAP_LOCAL"); echo $key; ?>",
+                v: "weekly",
+            });
+
+            let map;
+            initMap();
+        </script>
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="mt-6 flex items-center justify-between gap-x-6">
                     <h2 class="text-base/7 font-semibold text-gray-900">Site details</h2>
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/sitedetail/{{ $site->id }}"  class="rounded-md bg-indigo-100 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</a>
+                        <a href="/auth/profile"  class="rounded-md bg-indigo-100 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</a>
                         <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                     </div>
                 </div>
+                <div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    {{--          @php--}}
-                    {{--              dump($site['site_description']);--}}
-                    {{--          @endphp--}}
                     <div class="sm:col-span-4">
 
                         <label for="site_name" class="block text-sm/6 font-medium text-gray-900">Name</label>
@@ -106,14 +218,14 @@
                         @enderror
                     </div>
 
-                    <div class="sm:col-span-1">
+                    <!--div class="sm:col-span-1">
                         <label for="lat" class="block text-sm/6 font-medium text-gray-900">Latitude</label>
                         <div class="mt-2">
                             <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                 {{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
                                 <input
                                         type="text"
-                                        value="{{ $site->lat }}"
+                                        value=""
                                         name="lat"
                                         id="lat"
                                         class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" >
@@ -122,9 +234,11 @@
                         @error('lat')
                         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div -->
 
-                    <div class="sm:col-span-1">
+                    <input type="hidden" name="lat" id="lat" value="{{$site->lat}}" />
+                    <input type="hidden" name="lng" id="lng" value="{{$site->lng}}" />
+                    <!--div class="sm:col-span-1">
                         <label for="lng" class="block text-sm/6 font-medium text-gray-900">Longitude</label>
                         <div class="mt-2">
                             <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
@@ -138,7 +252,7 @@
                                 >
                             </div>
                         </div>
-                    </div>
+                    </div -->
 
                     @error('lng')
                     <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
@@ -155,12 +269,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
-
-
     </form>
+    <script>
+    </script>
 </x-layout>

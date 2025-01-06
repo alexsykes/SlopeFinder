@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'accept_terms',
     ];
 
     /**
@@ -44,7 +45,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'accept_terms' => 1,
         ];
+    }
+
+    public function clubs() {
+        return $this->hasMany(Club::class, 'created_by')->orderBy('name', 'asc');
+    }
+
+    public function sites() {
+        return $this->hasMany(Site::class, 'created_by')->orderBy('site_name', 'asc');
     }
 }

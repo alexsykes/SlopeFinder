@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace App\Models\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
