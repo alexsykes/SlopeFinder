@@ -66,9 +66,6 @@ if(isset($_COOKIE[$cookie_name])) {
 		async function initMap() {
 			const markerData = <?php echo json_encode($allSites); ?>;
 
-// console.log(markerData);
-			// Request needed libraries.
-			//@ts-ignore
 			const { Map } = await google.maps.importLibrary("maps");
 			const { AdvancedMarkerElement } =  await google.maps.importLibrary("marker");
 
@@ -94,7 +91,7 @@ if(isset($_COOKIE[$cookie_name])) {
 				const thisMarker = markerData[i];
 
 				// console.log(thisMarker);
-				const id = thisMarker['id'];
+				// const id = thisMarker['id'];
 				const lat = thisMarker['lat'];
 				const lng = thisMarker['lng'];
 				const name = thisMarker['site_name'];

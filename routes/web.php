@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiteController;
 use App\Models\Club;
 use App\Models\Site;
 use App\Models\User;
@@ -21,6 +22,11 @@ Route::get('/', function () {
 // Display about page
 Route::get('/about', function () {
     return view('static/about');
+}
+);
+// Display about page
+Route::get('/test', function () {
+    return view('test');
 }
 );
 
@@ -80,35 +86,12 @@ Route::get('/sitelist', function () {
 });
 
 //  Process new site data
-Route::post('/sites', function() {
-//    validate
-    request()->validate([
-        'site_name' => ['required', 'min:3'],
-        'site_description' => ['required'],
-        'site_access' => ['required'],
-        'site_wind_directions' => ['required'],
-        'lat' => ['required', 'numeric', 'decimal:4,8'],
-        'lng' => ['required', 'numeric', 'decimal:4,8']
-    ]);
-
-    Site::create([
-        'site_name' => request('site_name'),
-        'near' => request('near'),
-        'site_description' => request('site_description'),
-        'site_access' => request('site_access'),
-        'site_wind_directions' => request('site_wind_directions'),
-        'lat'   => request('lat'),
-        'lng'   => request('lng'),
-        'w3w'   => request('w3w')
-    ]);
-
-    return redirect('/');
-});
 
 //  Form for site editing
 Route::get('sites/create', function () {
     return view('sites.create');
 });
+Route::post('sites/create', [SiteController::class, 'store']);
 
 // Display data for a single site
 Route::get('/sitedetail/{id}', function($id) {
@@ -123,34 +106,7 @@ Route::get('/sites/{id}/edit', function($id) {
 });
 
 // Update
-Route::patch('/sitedetail/{id}', function($id) {
-//  Validate
-    request()->validate([
-        'site_name' => ['required', 'min:3'],
-        'site_description' => ['required'],
-        'site_access' => ['required'],
-        'site_wind_directions' => ['required'],
-        'lat' => ['required', 'numeric', 'decimal:4,8'],
-        'lng' => ['required', 'numeric', 'decimal:4,8']
-    ]);
-//    Authorise
-//    update
-    $user = Auth::user();
-    $userid = $user->id;
-    $site = Site::findOrFail($id);
-    $site->update([
-        'site_name' => request('site_name'),
-        'near' => request('near'),
-        'site_description' => request('site_description'),
-        'site_access' => request('site_access'),
-        'site_wind_directions' => request('site_wind_directions'),
-        'lat'   => request('lat'),
-        'lng'   => request('lng'),
-        'w3w'   => request('w3w'),
-        'updated_by'   => $userid,
-    ]);
-    return redirect('/auth/profile');
-});
+Route::patch('/sitedetail/{id}', [SiteController::class, 'update'] );
 
 // Destroy
 Route::delete('/sitedetail/{id}', function($id) {

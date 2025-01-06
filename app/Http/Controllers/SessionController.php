@@ -34,7 +34,7 @@ class SessionController extends Controller
             ]);
         }
         request()->session()->regenerate();
-        return redirect('/auth/profile');
+        return redirect('/');
     }
 
     public function destroy() {

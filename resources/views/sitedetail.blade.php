@@ -61,6 +61,7 @@
 			map = new Map(document.getElementById("map"), {
 				zoom: 12,
 				center: position,
+				streetViewControl: false,
 				mapTypeId: google.maps.MapTypeId.TERRAIN,
 				mapId: "c2290875eac93973",
 			})
