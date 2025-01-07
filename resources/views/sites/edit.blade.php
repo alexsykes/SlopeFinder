@@ -201,74 +201,75 @@
 
 
                     <div class="sm:col-span-full">
-                        <label for="site_wind_directions" class="block text-sm/6 font-medium text-gray-900">Site wind directions</label>
-                        <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                {{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
-                                <input type="text"
-                                       value="{{ $site->site_wind_directions }}"
-                                       name="site_wind_directions"
-                                       id="site_wind_directions"
-                                       class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                                       placeholder="eg  NNE-NE-ENE" >
-                            </div>
-                        </div>
-                        @error('site_wind_directions')
-                        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                        @enderror
+                        <label for="site_wind_directions" class="block text-sm/6 font-medium text-gray-900">Site wind directions - From - facing the wind, the furthest to your left that works. To - the furthest to your right that works.</label>
                     </div>
 
-                    <!--div class="sm:col-span-1">
-                        <label for="lat" class="block text-sm/6 font-medium text-gray-900">Latitude</label>
-                        <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                {{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
-                                <input
-                                        type="text"
-                                        value=""
-                                        name="lat"
-                                        id="lat"
-                                        class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" >
-                            </div>
-                        </div>
-                        @error('lat')
-                        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                        @enderror
-                    </div -->
 
-                    <input type="hidden" name="lat" id="lat" value="{{$site->lat}}" />
-                    <input type="hidden" name="lng" id="lng" value="{{$site->lng}}" />
-                    <!--div class="sm:col-span-1">
-                        <label for="lng" class="block text-sm/6 font-medium text-gray-900">Longitude</label>
-                        <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                {{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
-                                <input
-                                        type="text"
-                                        value="{{ $site->lng }}"
-                                        name="lng"
-                                        id="lng"
-                                        class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-                                >
-                            </div>
-                        </div>
-                    </div -->
+                    <div class=" items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                    <div class="pl-4 sm:col-span-2">
+                        <label for="from" class="block text-sm/10 font-medium text-gray-900">From:</label>
+                        <select class="ml-2 bg-white pb-2 space-x-4" name="from" id="from">
+                            @php
+                                $from = $site['from'];
+                            @endphp
+                            <option @php if($from == 0 ) echo "selected"; @endphp value="0">North</option>
+                            <option @php if($from == 1 ) echo "selected"; @endphp value="1">North Northeast</option>
+                            <option @php if($from == 2 ) echo "selected"; @endphp value="2">Northeast</option>
+                            <option @php if($from == 3 ) echo "selected"; @endphp value="3">East Northeast</option>
+                            <option @php if($from == 4 ) echo "selected"; @endphp value="4">East</option>
+                            <option @php if($from == 5 ) echo "selected"; @endphp value="5">East Southeast</option>
+                            <option @php if($from == 6 ) echo "selected"; @endphp value="6">Southeast</option>
+                            <option @php if($from == 7 ) echo "selected"; @endphp value="7">South Southeast</option>
+                            <option @php if($from == 8 ) echo "selected"; @endphp value="8">South</option>
+                            <option @php if($from == 9 ) echo "selected"; @endphp value="9">South Southwest</option>
+                            <option @php if($from == 10 ) echo "selected"; @endphp value="10">Southwest</option>
+                            <option @php if($from == 11 ) echo "selected"; @endphp value="11">West Southwest</option>
+                            <option @php if($from == 12 ) echo "selected"; @endphp value="12">West</option>
+                            <option @php if($from == 13 ) echo "selected"; @endphp value="13">West Northwest</option>
+                            <option @php if($from == 14 ) echo "selected"; @endphp value="14">Northwest</option>
+                            <option @php if($from == 15 ) echo "selected"; @endphp value="15">North Northwest</option>
+                        </select>
+                    </div>
+                    </div>
 
-                    @error('lng')
-                    <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
-                    @enderror
-
+                        <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                    <div class="pl-4 sm:col-span-2">
+                        <label for="to" class="block text-sm/10 font-medium text-gray-900">To:</label>
+                        <select class="ml-2 bg-white pb-2 space-x-4" name="to" id="to">
+                            @php
+                                $to = $site['to'];
+                            @endphp
+                            <option @php if($to == 0 ) echo "selected"; @endphp value="0">North</option>
+                            <option @php if($to == 1 ) echo "selected"; @endphp value="1">North Northeast</option>
+                            <option @php if($to == 2 ) echo "selected"; @endphp value="2">Northeast</option>
+                            <option @php if($to == 3 ) echo "selected"; @endphp value="3">East Northeast</option>
+                            <option @php if($to == 4 ) echo "selected"; @endphp value="4">East</option>
+                            <option @php if($to == 5 ) echo "selected"; @endphp value="5">East Southeast</option>
+                            <option @php if($to == 6 ) echo "selected"; @endphp value="6">Southeast</option>
+                            <option @php if($to == 7 ) echo "selected"; @endphp value="7">South Southeast</option>
+                            <option @php if($to == 8 ) echo "selected"; @endphp value="8">South</option>
+                            <option @php if($to == 9 ) echo "selected"; @endphp value="9">South Southwest</option>
+                            <option @php if($to == 10 ) echo "selected"; @endphp value="10">Southwest</option>
+                            <option @php if($to == 11 ) echo "selected"; @endphp value="11">West Southwest</option>
+                            <option @php if($to == 12 ) echo "selected"; @endphp value="12">West</option>
+                            <option @php if($to == 13 ) echo "selected"; @endphp value="13">West Northwest</option>
+                            <option @php if($to == 14 ) echo "selected"; @endphp value="14">Northwest</option>
+                            <option @php if($to == 15 ) echo "selected"; @endphp value="15">North Northwest</option>
+                        </select>
+                    </div>
+                    </div>
                     <div class="sm:col-span-full">
-                        <label for="w3w" class="block text-sm/6 font-medium text-gray-900">What3Words</label>
+                        <label for="w3w" class="block text-sm/10 font-medium text-gray-900">What3Words</label>
                         <div class="mt-2">
                             <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                {{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
                                 <input type="text" name="w3w" id="w3w"
                                        value="{{ $site->w3w }}"
                                        class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6" placeholder="What 3 Words reference eg. delivering.multiplied.racers">
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="lat" id="lat" value="{{$site->lat}}" />
+                    <input type="hidden" name="lng" id="lng" value="{{$site->lng}}" />
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ class Site extends Model {
     use HasFactory;
 
     protected $fillable = ['site_name', 'near', 'site_description', 'site_access', 'site_wind_directions', 'lat', 'lng', 'created_by',
-        'updated_by', 'published', 'w3w', 'updated_at' ];
+        'updated_by', 'published', 'w3w', 'updated_at' , 'dir', 'from', 'to'];
 
     static function getPublishedSiteList() {
         $sites = Site::where('published', 1)

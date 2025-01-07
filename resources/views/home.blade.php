@@ -140,6 +140,17 @@
 			@endAuth
 
 			@guest
+			// A marker with a custom SVG glyph.
+			const glyphImg = document.createElement("img");
+
+			glyphImg.src =
+					"https://developers.google.com/maps/documentation/javascript/examples/full/images/google_logo_g.svg";
+
+			const glyphSvgPinElement = new PinElement({
+				glyph: glyphImg,
+			});
+
+
 			let content = "<div>For full access to over 300 sites<br><strong><a href=\"/register\">Register  here</a></strong></div>";
 			for (i = 0; i < markerData.length; i++) {
 				const thisMarker = markerData[i];
@@ -173,6 +184,7 @@
 
 
 			const pinBorder = new PinElement({
+				background: "violet",
 				borderColor: "black",
 				glyphColor: "white",
 			});

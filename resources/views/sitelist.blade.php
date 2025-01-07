@@ -13,10 +13,6 @@
 		}
 	</style>
 @php
-//	$data = file_get_contents('https://api.openweathermap.org/data/3.0/onecall?lat=53.8&lon=-2&units=metric&exclude=minutely&appid=6aff05a2599912b387c2b5390360cc84');
-//	dd(json_encode($data));
-//$data = https://api.openweathermap.org/data/3.0/onecall?lat=53.8&lon=-2&units=metric&exclude=minutely&appid=6aff05a2599912b387c2b5390360cc84";
-
 $cookie_name = 'mapSettings';
 $lat = 54;
 $lng = -2;

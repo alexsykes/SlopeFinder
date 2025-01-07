@@ -170,7 +170,7 @@
                                        id="site_name"
                                        class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
                                        placeholder="Winter Hill"
-                                required>
+                                       required>
                             </div>
                         </div>
                         @error('site_name')
@@ -246,43 +246,22 @@
                         @error('site_wind_directions')
                         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                         @enderror
+
+
                     </div>
+                    <input
+                            type="hidden"
+                            value=""
+                            name="lat"
+                            id="lat" />
 
-{{--                    <div class="sm:col-span-1">--}}
-{{--                        <label for="lat" class="block text-sm/6 font-medium text-gray-900">Latitude</label>--}}
-{{--                        <div class="mt-2">--}}
-{{--                            <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">--}}
-{{--                                --}}{{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
-                                <input
-                                        type="hidden"
-                                        value=""
-                                        name="lat"
-                                        id="lat" />
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        @error('lat')--}}
-{{--                        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>--}}
-{{--                        @enderror--}}
-{{--                    </div>--}}
+                    <input
+                            type="hidden"
+                            value=""
+                            name="lng"
+                            id="lng"
+                    />
 
-{{--                    <div class="sm:col-span-1">--}}
-{{--                        <label for="lng" class="block text-sm/6 font-medium text-gray-900">Longitude</label>--}}
-{{--                        <div class="mt-2">--}}
-{{--                            <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">--}}
-{{--                                --}}{{--              <div class="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">workcation.com/</div>--}}
-                                <input
-                                        type="hidden"
-                                        value=""
-                                        name="lng"
-                                        id="lng"
-                                />
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                    @error('lng')--}}
-{{--                    <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>--}}
-{{--                    @enderror--}}
 
                     <div class="sm:col-span-full">
                         <label for="w3w" class="block text-sm/6 font-medium text-gray-900">What3Words</label>
