@@ -4,13 +4,9 @@
     </x-slot:heading>
 
     <form method="POST" action="/register">
-        <div class=" flex items-baseline space-x-4 justify-start">
-            <a href="/"  class="rounded-md  bg-violet-100 px-3 py-1 text-sm font-light border border-violet-800 text-violet-800 drop-shadow-lg hover:bg-violet-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Cancel</a>
-            <button type="submit" class="rounded-md bg-violet-600 px-3 py-1 text-sm font-light  border border-violet-800 text-white drop-shadow-lg hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Register</button>
-        </div>
         @csrf
         <div class="space-y-12">
-            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="mt-3 gap-y-8">
                 <x-form-field>
                     <x-form-label for="name">Name</x-form-label>
                     <div class="mt-2">
@@ -53,7 +49,7 @@
 
                 <div class="col-span-4">
                     <label for="accept_terms" class="block text-sm/6 font-medium text-gray-900">Terms and Conditions</label>
-                    <div class="text-xs">I accept the terms and conditions</div>
+                    <div class="text-xs">I accept the terms and conditions stated in the <a class="underline" href="/terms">link</a> below</div>
                     <div class="mt-2">
                         <input type="checkbox"
                                name="accept_terms"
@@ -65,7 +61,10 @@
                 @error('accept_terms')
                 <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
                 @enderror
-
+                <div class=" mt-4 flex items-baseline space-x-4 justify-start">
+                    <a href="/"  class="rounded-md  bg-violet-100 px-3 py-1 text-sm font-light border border-violet-800 text-violet-800 drop-shadow-lg hover:bg-violet-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Cancel</a>
+                    <button type="submit" class="rounded-md bg-violet-600 px-3 py-1 text-sm font-light  border border-violet-800 text-white drop-shadow-lg hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Register</button>
+                </div>
 
             </div>
         </div>

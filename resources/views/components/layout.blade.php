@@ -17,23 +17,44 @@
 <header class="bg-violet-800 drop-shadow-md">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  sm:flex sm:justify-between">
         <h1 class="text-3xl font-bold tracking-tight text-white">{{ $heading }}</h1>
+{{--        Hidden for small screens --}}
         <div class="hidden md:block">
             <div class="ml-4 flex space-x-4 items-center m-auto px md:ml-6" >
                 <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 @guest
                     <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
-                    <!-- x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link -->
+                    < x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
                 @endguest
 
                 @auth
-                        <!--x-nav-link href="/club/register" :active="request()->is('club/register')">Add a club</x-nav-link -->
-                        <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
+                    <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
                     <form method="POST" action="/logout">
                         @csrf
                         <x-form-button>Log Out</x-form-button>
                     </form>
                 @endauth
             </div>
+        </div>
+{{--        So - for small screens --}}
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+                <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/" :active="request()->is('/')">Home</a>
+                @guest
+                    <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/login" :active="request()->is('/login')">Log In</a>
+                    <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/register" :active="request()->is('/register')">Register</a>
+                @endguest
+
+                @auth
+                    <a href="/auth/profile" :active="request()->is('auth/profile')">Me</a>
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <x-form-button>Log Out</x-form-button>
+                    </form>
+                @endauth
+            </div>
+        </div>
         </div>
     </div>
 </header>

@@ -26,7 +26,7 @@ Route::get('/about', function () {
 );
 // Display about page
 Route::get('/test', function () {
-    return view('test');
+    return view('/components/newlayout');
 }
 );
 
