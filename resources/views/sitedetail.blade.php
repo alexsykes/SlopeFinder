@@ -1,10 +1,4 @@
 <x-layout>
-	<style >
-		#map {
-			height: 600px;
-			width: 100%;
-		}
-	</style >
 
 	<script>
 		window.onbeforeunload = function(){

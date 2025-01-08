@@ -1,17 +1,4 @@
 <x-layout>
-	<style>
-		html,
-		body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-
-		#map {
-			height: 600px;
-			width: 100%;
-		}
-	</style>
 @php
 $cookie_name = 'mapSettings';
 $lat = 54;

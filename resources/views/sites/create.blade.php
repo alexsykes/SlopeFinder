@@ -54,12 +54,7 @@
     <form method="POST" action="/sites/create">
 
         @csrf
-        <style >
-            #map {
-                height: 600px;
-                width: 100%;
-            }
-        </style >
+
         @php
 
             $cookie_name = 'mapSettings';

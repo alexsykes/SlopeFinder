@@ -3,6 +3,62 @@
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+
+        /* Hide display on large screens */
+        .topnav {
+            display: none;
+            overflow: hidden;
+            color: white;
+        }
+
+        .topnav a {
+            float: left;
+            display: inline;
+            text-align: left;
+            padding: 8px 8px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .topnav button {
+            display: inline-flex;
+            padding: 8px 8px;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .topnav button:hover {
+            color:lavender;
+        }
+
+        .topnav a:hover {
+            color:lavender;
+        }
+
+        .topnav a.active {
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav {
+                display: inline-flex;
+            }
+            .topnav a {display: inline-block;}
+        }
+
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php if (env('APP_NAME') != ''){
@@ -16,18 +72,21 @@
 
 <header class="bg-violet-800 drop-shadow-md">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  sm:flex sm:justify-between">
-        <h1 class="text-3xl font-bold tracking-tight text-white">{{ $heading }}</h1>
+        <h1 class="text-2xl font-bold tracking-tight text-white">{{ $heading }}</h1>
+
+
 {{--        Hidden for small screens --}}
-        <div class="hidden md:block">
+        <div class="hidden sm:block">
             <div class="ml-4 flex space-x-4 items-center m-auto px md:ml-6" >
                 <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 @guest
                     <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
-                    < x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
+                    <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
                 @endguest
 
                 @auth
                     <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
+{{--                Logout via form --}}
                     <form method="POST" action="/logout">
                         @csrf
                         <x-form-button>Log Out</x-form-button>
@@ -35,26 +94,25 @@
                 @endauth
             </div>
         </div>
+
+
+
 {{--        So - for small screens --}}
-
-        <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="sm:hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pb-3 pt-2">
-                <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/" :active="request()->is('/')">Home</a>
-                @guest
-                    <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/login" :active="request()->is('/login')">Log In</a>
-                    <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-violet-300 hover:text-white" href="/register" :active="request()->is('/register')">Register</a>
-                @endguest
-
-                @auth
-                    <a href="/auth/profile" :active="request()->is('auth/profile')">Me</a>
+        <div class="topnav " id="myTopnav">
+            @guest
+                <a href="register"  class="text-white" >Register</a>
+                <a href="login"  class="text-white " >Login</a>
+            @endguest
+            @auth
+                <a href="auth/profile"  class="text-white" >My profile</a>
                     <form method="POST" action="/logout">
                         @csrf
-                        <x-form-button>Log Out</x-form-button>
+                        <button class="topnav">Log Out</button>
                     </form>
-                @endauth
-            </div>
-        </div>
+            @endauth
+            <a href="/" class="text-white"><i class="fa fa-home"></i></a>
+            <!-- a href="javascript:void(0);" class="icon" onclick="toggleMenu()"><i class="fa fa-bars"></i -->
+            </a>
         </div>
     </div>
 </header>

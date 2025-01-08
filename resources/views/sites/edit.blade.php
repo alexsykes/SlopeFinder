@@ -4,12 +4,7 @@
     </x-slot:heading>
     <form method="POST" action="/sitedetail/{{ $site->id }}">
         @csrf
-        @method('PATCH')	<style >
-            #map {
-                height: 600px;
-                width: 100%;
-            }
-        </style >
+        @method('PATCH')
         <script>
 
             window.onbeforeunload = function(){
