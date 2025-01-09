@@ -22,22 +22,27 @@
             display: none;
             overflow: hidden;
             color: white;
+            position: absolute;
+            top: 1.1rem;
+            right: 1rem;
         }
 
         .topnav a {
             float: left;
             display: inline;
             text-align: left;
-            padding: 8px 8px;
+            padding: 8px 6px;
             text-decoration: none;
             font-size: 15px;
         }
 
         .topnav button {
-            display: inline-flex;
-            padding: 8px 8px;
+            position: relative;
+            top: 0rem;
+            right: 0rem;
+            padding: 8px 6px;
             text-align: left;
-            font-size: 15px;
+            font-size: 15px
         }
 
         .topnav button:hover {
@@ -56,6 +61,7 @@
                 display: inline-flex;
             }
             .topnav a {display: inline-block;}
+            .topnav button {display: inline-block;}
         }
 
     </style>
@@ -72,7 +78,7 @@
 
 <header class="bg-violet-800 drop-shadow-md">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8  sm:flex sm:justify-between">
-        <h1 class="text-2xl font-bold tracking-tight text-white">{{ $heading }}</h1>
+        <h1 class="text-m sm:text-2xl  font-bold tracking-tight text-white">{{ $heading }}</h1>
 
 
 {{--        Hidden for small screens --}}
@@ -85,12 +91,12 @@
                 @endguest
 
                 @auth
-                    <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
 {{--                Logout via form --}}
                     <form method="POST" action="/logout">
                         @csrf
                         <x-form-button>Log Out</x-form-button>
                     </form>
+                    <x-nav-link href="/auth/profile" :active="request()->is('auth/profile')">Me</x-nav-link>
                 @endauth
             </div>
         </div>

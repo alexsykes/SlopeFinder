@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot:heading>Your Use of SlopeFinder dot UK</x-slot:heading>
+    <x-slot:heading>Your use of this website</x-slot:heading>
     <div class="text-black leading-6">
         <div class="my-4 justify-center italic  text-center">Acceptance of and compliance with the following terms is a condition of use of this website.</div>
         <div class="my-4 text-sm">Inclusion of any location within this website indicates no right of access for model flying or any other purpose. Permission MUST always be obtained from the landowner prior to any activity.</div>
