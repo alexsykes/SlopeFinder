@@ -2,6 +2,13 @@
     <x-slot:heading>
         Reset password
     </x-slot:heading>
+
+    @if(session()->has('status'))
+        <div> {{
+        session()->get('status')
+        }}</div>
+
+    @endif
     <form method="POST" action="/forgot-password">
         @csrf
         <div class="space-y-12">

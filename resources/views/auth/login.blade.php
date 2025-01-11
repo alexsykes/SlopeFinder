@@ -2,6 +2,11 @@
     <x-slot:heading>
         Login
     </x-slot:heading>
+    @if(session()->has('status'))
+        <div> {{
+        session()->get('status')
+        }}</div>
+    @endif
     <form method="POST" action="/login">
         @csrf
         <div class="space-y-12">
