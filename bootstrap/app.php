@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->trustHosts(at: ['slopefinder.test']);
+        $middleware->trustHosts(at: ['slopefinder.uk']);
+        $middleware->trustHosts(at: ['daftasabrush.com']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

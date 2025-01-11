@@ -23,9 +23,9 @@ class RegisteredUserController extends Controller
             'password' => ['required', Password::min(6), 'confirmed'],
         ]);
 
-        if(request()->has('accept_terms')) {
-            $attrs['accept_terms'] = true;
-        }
+
+        $attrs['accept_terms'] = request()->has('accept_terms');
+        $attrs['user_id'] = 0;
 
         $user = User::create($attrs);
 
@@ -36,5 +36,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         return redirect('/sitelist');
     }
+
+
+
+
 
 }

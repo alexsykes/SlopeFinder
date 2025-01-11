@@ -118,7 +118,6 @@
             @endauth
             <a href="/" class="text-white"><i class="fa fa-home"></i></a>
             <!-- a href="javascript:void(0);" class="icon" onclick="toggleMenu()"><i class="fa fa-bars"></i -->
-            </a>
         </div>
     </div>
 </header>
