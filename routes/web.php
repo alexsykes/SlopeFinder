@@ -105,7 +105,6 @@ Route::post('/reset-password', function (Request $request) {
             event(new PasswordReset($user));
         }
     );
-    dd($status);
 
     return $status === Password::PASSWORD_RESET
         ? redirect()->route('login')->with('status', __($status))

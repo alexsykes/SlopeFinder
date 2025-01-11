@@ -38,8 +38,8 @@
 
         .topnav button {
             position: relative;
-            top: 0rem;
-            right: 0rem;
+            top: 0;
+            right: 0;
             padding: 8px 6px;
             text-align: left;
             font-size: 15px
@@ -106,8 +106,8 @@
 {{--        So - for small screens --}}
         <div class="topnav " id="myTopnav">
             @guest
-                <a href="register"  class="text-white" >Register</a>
-                <a href="login"  class="text-white " >Login</a>
+                <a href="/register"  class="text-white" >Register</a>
+                <a href="/login"  class="text-white " >Login</a>
             @endguest
             @auth
                 <a href="auth/profile"  class="text-white" >My profile</a>
