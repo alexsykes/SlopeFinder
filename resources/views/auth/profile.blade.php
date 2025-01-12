@@ -1,41 +1,44 @@
+
+
 <x-layout>
     <x-slot:heading>
         My Profile
     </x-slot:heading>
 
-        {{--        <div class=" flex items-baseline space-x-4 justify-start">--}}
-        {{--            <a href="/"  class="rounded-md bg-violet-100 px-3 py-1 text-sm font-light  border border-violet-800  text-violet-600 drop-shadow-lg hover:bg-violet-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Cancel</a>--}}
-        {{--            <button type="submit" class="rounded-md bg-violet-600 px-3 py-1 text-sm font-light  border border-violet-800 text-white drop-shadow-lg hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Login</button>--}}
-        {{--        </div>--}}
-        @csrf
-        <div class="space-y-12">
-            <div class="mt-6  gap-x-6 gap-y-8 text-sm font-light text-black">
-                <div class="mt-2" id="name">Name: {{Auth::user()->name}}</div>
-                <div class="mt-2" id="username">Username: {{Auth::user()->username}}</div>
-                <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>
-                <div class="mt-2" id="mysites">My Sites:
-                    @php
-                        $sites = Auth::user()->sites;
-                        foreach ($sites as $site) {
-                    @endphp
-                    <div class="ml-4"><a href="/sites/{{ $site->id }}/edit">{{ $site->site_name }}</a></div>
-                    @php
-                        }
-                    @endphp
+    {{--        <div class=" flex items-baseline space-x-4 justify-start">--}}
+    {{--            <a href="/"  class="rounded-md bg-violet-100 px-3 py-1 text-sm font-light  border border-violet-800  text-violet-600 drop-shadow-lg hover:bg-violet-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Cancel</a>--}}
+    {{--            <button type="submit" class="rounded-md bg-violet-600 px-3 py-1 text-sm font-light  border border-violet-800 text-white drop-shadow-lg hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Login</button>--}}
+    {{--        </div>--}}
+    @csrf
+    <div class="space-y-12">
+        <div class="mt-6  gap-x-6 gap-y-8 text-sm font-light text-black">
+            <div class="mt-2" id="name">Name: {{Auth::user()->name}}</div>
+            <div class="mt-2" id="username">Username: {{Auth::user()->username}}</div>
+            <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>
+            <div class="mt-2" id="mysites">My Sites:
+                @php
+                    //                        $sites = Auth::user()->sites;
+                    $sites = \App\Models\Site::all();
+                                            foreach ($sites as $site) {
+                @endphp
+                <div class="ml-4"><a href="/sites/{{ $site->id }}/edit">{{ $site->site_name }}</a></div>
+                @php
+                    }
+                @endphp
 
-                </div>
-                <div><a class="" href="/sites/create">(+) Add</a></div>
-                <div class="mt-2" id="myclubs">My Clubs:
-                    @php
-                        $clubs = Auth::user()->clubs;
-
-                        foreach ($clubs as $club) {
-                    @endphp
-                    <div class="ml-4"><a href="/club/update/{{ $club->id }}">{{ $club->name }}</a></div>
-                    @php
-                        }
-                    @endphp </div>
-                <div><a class="" href="/club/register">(+) Add</a></div>
             </div>
+            <div><a class="" href="/sites/create">(+) Add</a></div>
+            <div class="mt-2" id="myclubs">My Clubs:
+                @php
+                    $clubs = Auth::user()->clubs;
+
+                    foreach ($clubs as $club) {
+                @endphp
+                <div class="ml-4"><a href="/club/update/{{ $club->id }}">{{ $club->name }}</a></div>
+                @php
+                    }
+                @endphp </div>
+            <div><a class="" href="/club/register">(+) Add</a></div>
         </div>
+    </div>
 </x-layout>

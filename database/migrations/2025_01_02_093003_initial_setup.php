@@ -46,7 +46,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('website', 255)->nullable();
-            $table->string('description');
+            $table->text('description');
             $table->string('contact_name', 255);
             $table->string('contact_email', 255);
             $table->unsignedBigInteger('created_by');
@@ -65,6 +65,8 @@ return new class extends Migration
             $table->text('site_description');
             $table->string('site_name', 255)->nullable();
             $table->string('site_owner', 255)->nullable();
+            $table->string('begin', 255)->nullable();
+            $table->string('end', 255)->nullable();
             $table->tinyInteger('site_restricted')->default(0);
             $table->text('site_restrictions')->nullable();
             $table->string('site_wind_directions', 255);

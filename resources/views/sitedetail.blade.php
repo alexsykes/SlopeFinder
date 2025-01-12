@@ -112,7 +112,8 @@
 	<div>{{ $site->site_description }}</div>
 	<div><strong>Access:</strong> {{$site->site_access }}</div>
 	<div><strong>Wind(s): {{$site->site_wind_directions }}</strong></div>
-	<div><strong>Coordinates:</strong> Lat: {{$site->lat }} Lng: {{$site->lng }}</div>
+	<div><strong>Coordinates:</strong> Lat: {{$site->lat }}° Lng: {{$site->lng }}°</div>
 	<div><strong>W3W: </strong><a href="https://what3words.com/{{$site->w3w }}">{{$site->w3w}}</a></div>
+	<div><strong>Last update:</strong> {{$site->updated_at->format('M jS, Y') }}</div>
 	{{--	<div><strong>Google maps: </strong><a class = "text-indigo-600 underline hover:no-underline" href="https://maps.google.com?zoom=4&q={{$site->lat}},{{$site->lng}}">click for location</a></div>--}}
 </x-layout>

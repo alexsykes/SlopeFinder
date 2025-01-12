@@ -54,17 +54,30 @@ class SiteController extends Controller
         $site = Site::findOrFail($id);
 
         $dirs = $directions[request('from')] . " to " . $directions[request('to')];
+//        dd(\request()->all());
+
+
+        $beginIndex = \request()->integer('from');
+
+        $endIndex = \request()->integer('to');
+        $end = $directions[$endIndex];
+        $begin = $directions[$beginIndex];
+//        dd($begin);
         $site->update([
             'site_name' => request('site_name'),
             'near' => request('near'),
             'site_description' => request('site_description'),
             'site_access' => request('site_access'),
+
+
 //        'site_wind_directions' => $dirs,
             'lat'   => request('lat'),
             'lng'   => request('lng'),
             'w3w'   => request('w3w'),
             'from'   => request('from'),
-            'to'   => request('to'),
+            'to'   => request()->integer('to'),
+            'end'   => $end,
+            'begin'   => $begin,
             'site_wind_directions'   => $dirs,
             'updated_by'   => $userid,
         ]);

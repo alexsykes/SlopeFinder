@@ -53,6 +53,7 @@ class User extends Authenticatable
     }
 
     public function sites() {
-        return $this->hasMany(Site::class, 'created_by')->orderBy('site_name', 'asc');
+        return Site::all();
+//        return $this->hasMany(Site::class, 'created_by')->orderBy('site_name', 'asc');
     }
 }
