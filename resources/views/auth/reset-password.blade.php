@@ -2,6 +2,12 @@
     <x-slot:heading>
         Reset password
     </x-slot:heading>
+
+        @if ($errors->get('email'))
+        <div class="text-red-500">
+            {{$errors->first('email')}}
+        </div>
+        @endif
     <form method="POST" action="/reset-password">
         @csrf
         <div class="space-y-12">
