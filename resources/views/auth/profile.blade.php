@@ -12,6 +12,7 @@
     @csrf
     <div class="space-y-12">
         <div class="mt-6  gap-x-6 gap-y-8 text-sm font-light text-black">
+
             <div class="mt-2" id="name">Name: {{Auth::user()->name}}</div>
             <div class="mt-2" id="username">Username: {{Auth::user()->username}}</div>
             <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>

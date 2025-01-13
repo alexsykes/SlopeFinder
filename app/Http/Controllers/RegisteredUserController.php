@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\newMember;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
@@ -28,13 +29,10 @@ class RegisteredUserController extends Controller
         $attrs['user_id'] = 0;
 
         $user = User::create($attrs);
-
-        Mail::to($user)->queue(
-            new newMember($user)
-        );
+        event(new Registered($user));
 
         Auth::login($user);
-        return redirect('/sitelist');
+        return redirect('/');
     }
 
 

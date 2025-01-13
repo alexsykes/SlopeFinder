@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
 
 
+
 // Display home page
 Route::get('/', function () {
     $sites = Site::all();
@@ -121,7 +122,7 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 //User profile
 Route::get('auth/profile', function () {
     return view('auth.profile');
-}) ;
+})->middleware(['auth', 'verified']); ;
 
 Route::get('/club/register', [ClubController::class, 'create']) ;
 Route::post('/club/register', [ClubController::class, 'registerClub']) ;
@@ -171,3 +172,36 @@ Route::delete('/sitedetail/{id}', function($id) {
 
     return redirect('/sitelist');
 });
+
+
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+// Display contact page
+Route::get('/auth/verified', function () {
+    return view('auth/verified');
+}
+);
+// Display contact page
+Route::get('/auth/verify-email', function () {
+    return view('auth/verify-email');
+}
+);
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
