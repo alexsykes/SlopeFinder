@@ -95,15 +95,17 @@
 					@auth
 			for (i = 0; i < markerData.length; i++) {
 				const thisMarker = markerData[i];
+				const id = parseFloat(thisMarker['id']);
 				const lat = parseFloat(thisMarker['lat']);
 				const lng = parseFloat(thisMarker['lng']);
 				var name = thisMarker['site_name'];
 
+				var slug = "notes.suggest/" + id;
 				const direction = thisMarker['site_wind_directions'];
 				const description = thisMarker['site_description'];
 				const access = thisMarker['site_access'];
 
-				let content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b></div>";
+				let content = "<div>" + description + "</div><br><div>Access: " + access + "</div><div><b>Winds: " + direction + "</b><br>Suggest an update - click <a href=\"" + slug + "\">here</a></div>";
 				const position = new google.maps.LatLng(lat, lng);
 				const marker = new AdvancedMarkerElement({
 					map: map,

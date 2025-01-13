@@ -5,6 +5,7 @@ use App\Models\Club;
 use App\Models\Site;
 use App\Models\User;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\ClubController;
 use Illuminate\Auth\Events\PasswordReset;
@@ -122,7 +123,7 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 //User profile
 Route::get('auth/profile', function () {
     return view('auth.profile');
-})->middleware(['auth', 'verified']); ;
+})->middleware(['auth', 'verified']);
 
 Route::get('/club/register', [ClubController::class, 'create']) ;
 Route::post('/club/register', [ClubController::class, 'registerClub']) ;
@@ -142,7 +143,13 @@ Route::get('/sitelist', function () {
     return view('sitelist', ['sites' => $sites, 'allSites' => $allSites]);
 });
 
-//  Process new site data
+//  Notes
+Route::post('notes.store', [NoteController::class, 'store']) ;
+Route::get('notes.suggest/{id}', function ($id) {
+    $site = Site::find($id);
+    return view('notes.sitesuggest', ['site' => $site]);
+})->middleware(['auth', 'verified']);
+
 
 //  Form for site editing
 Route::get('sites/create', function () {
