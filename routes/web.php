@@ -144,6 +144,7 @@ Route::get('/sitelist', function () {
 });
 
 //  Notes
+Route::get('notes',  [NoteController::class, 'list']) ;
 Route::post('notes.store', [NoteController::class, 'store']) ;
 Route::get('notes.suggest/{id}', function ($id) {
     $site = Site::find($id);

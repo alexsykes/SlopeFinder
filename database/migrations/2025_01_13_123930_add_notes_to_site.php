@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('site_id');
+            $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('user_id');
             $table->string('note');
             $table->string('type')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('site', function (Blueprint $table) {
+        Schema::table('notes', function (Blueprint $table) {
             //
         });
     }
