@@ -59,7 +59,7 @@
                     <td class="border px-2 ">{{ $note->updated_at->format('dS M, Y') }}</td>
                     <td class="border px-2 ">
                         @if ($note->accepted)
-                            <i class="fa-solid fa-circle-check">
+                            <i class="fa-solid fa-circle-check"></i>
                                 @else
                                     <i class="fa-solid fa-circle-xmark"></i>
                                         @endif</a>
