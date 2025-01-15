@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:heading>Notes</x-slot:heading>
-    <div class="px-2 py-2 bg-white border-1 border-gray-400 rounded-md px-2  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
+    <div class="px-2 py-2 bg-white border-1 border-gray-400 rounded-md  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
         <table class="table-auto">
             <caption class="caption-top px-2 py-2">User Notes</caption>
             <thead>
@@ -33,7 +33,7 @@
         </table>
     </div>
     <hr>
-    <div class="px-2 py-2 mt-6 bg-white border-1 border-gray-400 rounded-md px-2  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
+    <div class="px-2 py-2 mt-6 bg-white border-1 border-gray-400 rounded-md outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
         <table class="table-auto">
             <caption class="caption-top px-2 py-2">Completed User Notes</caption>
             <thead>
@@ -62,7 +62,7 @@
                             <i class="fa-solid fa-circle-check"></i>
                                 @else
                                     <i class="fa-solid fa-circle-xmark"></i>
-                                        @endif</a>
+                                        @endif
                     </td></tr>
             @endforeach
             </tbody>

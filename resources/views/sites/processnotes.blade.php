@@ -262,7 +262,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-2 py-2 bg-white border-1 border-gray-400 rounded-md px-2  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
+        <div class="px-2 py-2 bg-white border-1 border-gray-400 rounded-md outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
             @if (sizeof($site->notes) > 0)
             <table class="table-auto ">
                 <tr class="text-sm mx-4">
