@@ -288,21 +288,6 @@
                 @endif
                 @endforeach
             </table>
-
-            {{--            @foreach($site->notes as $note)--}}
-            {{--                @if ($note->completed == false)--}}
-            {{--                <div class="text-sm  mt-2 >">--}}
-            {{--                    <div class="inline">--}}
-            {{--                        {{$note->created_at->format('jS M, Y')}}--}}
-            {{--                    </div>--}}
-            {{--                    <div class="mx-4 inline">{{$note->note}}</div>--}}
-            {{--                    <label for="completed[]">Completed</label>--}}
-            {{--                    <input name="completed[]" id = "completed[]"  type="checkbox" @php if($note->completed) { @endphp checked @php } @endphpvalue="{{$note->id}}" class="mx-4 inline"/>--}}
-            {{--                    <label for="accepted[]">Accepted</label>--}}
-            {{--                    <input name="accepted[]" id = "accepted[]"  type="checkbox"  value="{{$note->id}}" class="mx-4 inline"/>--}}
-            {{--                </div>--}}
-            {{--                @endif--}}
-            {{--            @endforeach--}}
         </div>
         @endif
 

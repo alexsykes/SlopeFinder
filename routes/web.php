@@ -139,7 +139,7 @@ Route::patch('/club/update/{id}', [ClubController::class, 'update']) ;
 
 // Display all sites with pagination
 Route::get('/sitelist', function () {
-    $sites = Site::orderBy('site_name')->simplePaginate(30);
+    $sites = Site::orderBy('site_name')->paginate(50);
     $allSites = Site::all();
     return view('sitelist', ['sites' => $sites, 'allSites' => $allSites]);
 });

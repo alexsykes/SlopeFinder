@@ -18,9 +18,9 @@
             <div class="mt-2" id="email">Email: {{Auth::user()->email}}</div>
             <div class="mt-2" id="mysites">My Sites:
                 @php
-                    //                        $sites = Auth::user()->sites;
-                    $sites = \App\Models\Site::all();
-                                            foreach ($sites as $site) {
+                    $sites = Auth::user()->sites;
+                    $sites = \App\Models\Site::get()->sortBy('site_name');
+                    foreach ($sites as $site) {
                 @endphp
                 <div class="ml-4"><a href="/sites/{{ $site->id }}/edit">{{ $site->site_name }}</a></div>
                 @php
@@ -33,6 +33,7 @@
                 @php
                     $clubs = Auth::user()->clubs;
 
+//                    dd($clubs);
                     foreach ($clubs as $club) {
                 @endphp
                 <div class="ml-4"><a href="/club/update/{{ $club->id }}">{{ $club->name }}</a></div>

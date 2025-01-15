@@ -48,12 +48,19 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function clubs() {
-        return $this->hasMany(Club::class, 'created_by')->orderBy('name', 'asc');
+    public function isEditor() {
+        return $this->isEditor === true;
+    }
+    public function isAdmin() {
+        return $this->isSuperUser === true;
     }
 
+
+
     public function sites() {
-        return Site::all();
-//        return $this->hasMany(Site::class, 'created_by')->orderBy('site_name', 'asc');
+        return $this->hasMany(Site::class, 'created_by');
+    }
+    public function clubs() {
+        return $this->hasMany(Club::class, 'created_by');
     }
 }

@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot:heading>Notes</x-slot:heading>
-    <div class="px-2 py-2 bg-white border-1 border-gray-400 rounded-md  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
+    @if(sizeof($pending) > 0)
+    <div class="px-4 py-4 mt-6 bg-white border-1 border-gray-400 rounded-xl  outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
         <table class="table-auto">
             <caption class="caption-top px-2 py-2">User Notes</caption>
             <thead>
@@ -14,10 +15,6 @@
             </tr>
             </thead>
             <tbody>
-            @php
-                //    dump($pending);
-                //    dump($processed);
-            @endphp
             @foreach($pending as $note)
 
                 <tr class="text-sm" >
@@ -32,8 +29,8 @@
             </tbody>
         </table>
     </div>
-    <hr>
-    <div class="px-2 py-2 mt-6 bg-white border-1 border-gray-400 rounded-md outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
+    @endif
+    <div class="px-4 py-4 mt-6 bg-white border-1 border-gray-400 rounded-xl outline outline-1 -outline-offset-1 drop-shadow-lg outline-gray-300">
         <table class="table-auto">
             <caption class="caption-top px-2 py-2">Completed User Notes</caption>
             <thead>
@@ -59,9 +56,9 @@
                     <td class="border px-2 ">{{ $note->updated_at->format('dS M, Y') }}</td>
                     <td class="border px-2 ">
                         @if ($note->accepted)
-                            <i class="fa-solid fa-circle-check"></i>
+                            <i class="text-green-500 text-lg fa-solid fa-circle-check"></i>
                                 @else
-                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    <i class="text-red-500 text-lg fa-solid fa-circle-xmark"></i>
                                         @endif
                     </td></tr>
             @endforeach
