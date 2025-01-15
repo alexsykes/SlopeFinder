@@ -5,7 +5,7 @@
  @endphp
 
 
-    <form method="POST" action="/notes.store">
+    <form method="POST" action="/notes/store">
         @csrf
         <x-form-field>
             <x-form-label for="description">Suggest an update for {{$site->site_name}}</x-form-label>
