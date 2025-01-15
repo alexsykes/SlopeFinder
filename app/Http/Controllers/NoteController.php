@@ -27,7 +27,7 @@ class NoteController extends Controller
     }
 
     public function list() {
-        $processed = Note::where('completed', true)->get();
+        $processed = Note::where('completed', true)->get()->sortByDesc('created_at');
         $pending = Note::where('completed', false)->get()->sortBy('created_at');
 
         return view('notes.list', ['pending' => $pending, 'processed' => $processed]);

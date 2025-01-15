@@ -246,6 +246,7 @@
 	</script>
 
 	<div class="mt-1 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
+
 	<div class="text-black">
 		<div class="mt-2 text-violet-900">What's it all about?</div>
 		<div class="px-4 text-sm">A fairly comprehensive directory with slope-soaring and weather data - what more do you want? The map here shows one of our many sites selected at random. Click on the marker for full details and an up-to-date wind forecast.</div>
