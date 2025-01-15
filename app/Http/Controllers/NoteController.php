@@ -17,19 +17,19 @@ class NoteController extends Controller
             'description' => ['required', 'min:3'],
         ]);
 
-//        dd(request('site_id'));
         Note::create([
-            'item_id' => request('site_id'),
+            'item_id' => request('item_id'),
             'note' => request('description'),
-            'type' => 'site',
+            'type' => request('type'),
             'user_id' => $created_by,
         ]);
         return redirect('/');
     }
 
     public function list() {
-        $notes = Note::all()->sortBy('site_id')->sortBy('created_at');
+        $processed = Note::where('completed', true)->get();
+        $pending = Note::where('completed', false)->get()->sortBy('created_at');
 
-        return view('notes.list', ['notes' => $notes]);
+        return view('notes.list', ['pending' => $pending, 'processed' => $processed]);
     }
 }

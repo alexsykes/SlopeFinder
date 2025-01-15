@@ -3,6 +3,7 @@
 use App\Http\Controllers\SiteController;
 use App\Models\Club;
 use App\Models\Site;
+use App\Models\Note;
 use App\Models\User;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\NoteController;
@@ -157,6 +158,10 @@ Route::get('sites/create', function () {
     return view('sites.create');
 });
 Route::post('sites/create', [SiteController::class, 'store']);
+Route::post('/site/updateFromNotes', [SiteController::class, 'updateFromNotes']);
+//Route::post('/site/updateFromNotes', function() {
+//    dd(request());
+//});
 
 // Display data for a single site
 Route::get('/sitedetail/{id}', function($id) {
@@ -168,6 +173,13 @@ Route::get('/sitedetail/{id}', function($id) {
 Route::get('/sites/{id}/edit', function($id) {
     $site = Site::find($id);
     return view('sites.edit', ['site' => $site]);
+});
+
+// Display data for a single site
+Route::get('/site/processnotes/{id}', function($id) {
+
+    $site = Site::find($id);
+    return view('sites.processnotes', ['site' => $site]);
 });
 
 // Update

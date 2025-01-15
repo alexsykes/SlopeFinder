@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Note;
 
 class Site extends Model {
     use HasFactory;
@@ -29,7 +31,9 @@ class Site extends Model {
         return $sites;
     }
 
-
+    public function notes() {
+        return $this->hasMany(Note::class, 'item_id');
+    }
     public function user(): BelongsTo {
         return $this->belongsTo(User::class)->orderBy('id','asc');
     }
