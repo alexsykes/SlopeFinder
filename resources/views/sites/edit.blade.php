@@ -107,7 +107,7 @@
                         a.nonce = m.querySelector("script[nonce]")?.nonce || "";
                         m.head.append(a)
                     }));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f, ...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-                key: "<?php $key = env("GMAP_LOCAL"); echo $key; ?>",
+                key: "{{$_ENV['GMAP_API']}}",
                 v: "weekly",
             });
 

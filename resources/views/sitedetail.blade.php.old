@@ -13,6 +13,16 @@
 			setCookie("mapSettings",cookiestring);
 		}
 
+		window.onload = function() {
+			console.log("Loaded");
+			lat = {{$site->lat}};
+			lng = {{$site->lng}};
+			theURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lng + "&exclude=minutely,alerts,current&units=metric&appid=cb7a4bca45b294a2d6db1e66cb43e678"
+
+			console.log(theURL);
+			httpGetAsync(theURL, myCallback())
+		}
+
 		function setCookie(name, value, expires)   {
 			document.cookie = name + "=" + escape(value) + "; Secure; SameSite=None;  path=/" + ((expires == null) ? "" : "; expires=" + expires.toGMTString());
 		}
@@ -32,16 +42,32 @@
 			return "";
 		}
 
-		window.onbeforeunload = function(){
-			var mapzoom=map.getZoom();
-			var mapcenter=map.getCenter();
-			var maplat=mapcenter.lat();
-			var maplng=mapcenter.lng();
-			var maptypeid=map.getMapTypeId();
-			var cookiestring=maplat+"_"+maplng+"_"+mapzoom+"_"+maptypeid;
-//      Expire at end of session
-			setCookie("mapSettings",cookiestring);
+		function httpGetAsync(theUrl, callback)
+		{
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					callback(xmlHttp.responseText);
+			}
+			xmlHttp.open("GET", theUrl, true); // true for asynchronous
+			xmlHttp.send(null);
 		}
+
+		function myCallback(responseText) {
+			let forecast = document.getElementById("forecast");
+			// let weatherData =  JSON.parse(responseText);
+
+			console.log(responseText);
+			// let lat = weatherData['lat'];
+			// let sunrise = weatherData['daily'][0]['summary'];
+
+			// let hourlyData = weatherData['hourly'];
+			// for ( let i in hourlyData) {
+			// 	console.log( i + ":: Wind: " + hourlyData[i]['wind_speed'] + " at " + hourlyData[i]['wind_deg'] + "°")
+			// }
+			forecast.innerHTML = responseText;
+		}
+
 
 		async function initMap() {
 			const position = { lat:
@@ -93,7 +119,7 @@
 						a.nonce = m.querySelector("script[nonce]")?.nonce || "";
 						m.head.append(a)
 					}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f, ...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-			key: "<?php $key = env("GMAP_LOCAL"); echo $key; ?>",
+			key: "AIzaSyA4MBz6Xce0OZvEZ-vinOUCqEw8oHsZTsg",
 			v: "weekly",
 			// Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
 			// Add other bootstrap parameters as needed, using camel case.
@@ -110,6 +136,7 @@
 	</div>
 	<div class="mt-4 mb-4 border-1 shadow-xl border border-indigo-800" id="map"></div>
 	<div>{{ $site->site_description }}</div>
+	<div id="forecast"></div>
 	<div><strong>Access:</strong> {{$site->site_access }}</div>
 	<div><strong>Wind(s): {{$site->site_wind_directions }}</strong></div>
 	<div><strong>Coordinates:</strong> Lat: {{$site->lat }}° Lng: {{$site->lng }}°</div>

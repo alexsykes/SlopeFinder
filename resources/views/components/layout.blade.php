@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  class="h-full bg-violet-800">
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!--script src="https://cdn.tailwindcss.com"></script -->
     <script src="https://kit.fontawesome.com/086d4db9c7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -118,7 +118,6 @@
                     </form>
             @endauth
             <a href="/" class="text-white"><i class="fa fa-home"></i></a>
-            <!-- a href="javascript:void(0);" class="icon" onclick="toggleMenu()"><i class="fa fa-bars"></i -->
         </div>
     </div>
 </header>

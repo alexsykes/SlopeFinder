@@ -33,7 +33,7 @@ Route::get('/about', function () {
 );
 // Display about page
 Route::get('/test', function () {
-    return view('/components/newlayout');
+    return view('/test');
 }
 );
 
@@ -164,10 +164,7 @@ Route::post('/site/updateFromNotes', [SiteController::class, 'updateFromNotes'])
 //});
 
 // Display data for a single site
-Route::get('/sitedetail/{id}', function($id) {
-    $site = Site::find($id);
-    return view('sitedetail', ['site' => $site]);
-});
+Route::get('/sitedetail/{id}', [SiteController::class, 'showSiteDetail']);
 
 // Display data for a single site
 Route::get('/sites/{id}/edit', function($id) {

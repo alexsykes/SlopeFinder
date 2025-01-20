@@ -37,5 +37,10 @@ class Site extends Model {
     public function user(): BelongsTo {
         return $this->belongsTo(User::class)->orderBy('id','asc');
     }
+
+    public function forecast(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Forecast::class, 'site_id');
+    }
 }
 

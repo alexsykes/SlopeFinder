@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forecast;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use App\Models\Site;
@@ -153,5 +154,48 @@ class SiteController extends Controller
         return redirect('/notes');
     }
 
+    public function showSiteDetail($id)
+    {
+        $site = Site::find($id);
 
-}
+        SiteController::addHit($id);
+
+        $lat = $site->lat;
+        $lng = $site->lng;
+
+        if (!$site->forecast) {
+            $url = "https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lng&exclude=minutely,alerts,current&units=imperial&appid=".$_ENV['OPEN_WEATHER'];
+            $rawData = (file_get_contents($url, 'r'));
+            Forecast::create([
+                'site_id' => $id,
+                'data' => $rawData,
+                'updated_at' => NOW(),
+            ]);
+        } else {
+            $forecastID = $site->forecast()->first()->id;
+            $last_update = date_create(date($site->forecast->updated_at));
+            $now = date_create();
+            $diff = date_diff($now, $last_update, true)->days;
+            $forecast = Forecast::find($forecastID);
+
+            if ($diff > 1) {
+                $url = "https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lng&exclude=minutely,alerts,current&units=metric&appid=cb7a4bca45b294a2d6db1e66cb43e678";
+                $rawData = (file_get_contents($url, 'r'));
+                $forecast->update([
+                    'data' => $rawData,
+                    'updated_at' => NOW(),
+                ]);
+            }
+        }
+        $site = Site::find($id);
+        return view('sites/sitedetail', ['site' => $site]);
+    }
+
+    public function addHit($id)
+    {
+        $site = Site::find($id);
+        $site->hits = $site->hits + 1;
+
+        $site->save();
+
+    }}
